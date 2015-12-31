@@ -1,0 +1,24 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Load Balancing Yay</title>
+</head>
+<body>
+
+  <h1>YO</h1> 
+  <p id="messages"></p>
+  <script src="/socket.io/socket.io.js"></script>
+  <script>
+  (function setupWSConnection() {
+      var messages = document.getElementById("messages");
+      var socket = io();
+
+      socket.on('loadavg update', function(data) {
+        var newMessage = "<p>%data%</p>".replace("%data%", data.loadavg1);
+        messages.innerHTML = newMessage + messages.innerHTML;
+      });
+    })();
+  </script>
+</body>
+</html>

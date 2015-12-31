@@ -1,4 +1,4 @@
-$black  : #222;
+$black  : #363636;
 $white  : #fff;
 $red    : #AE2B3D;
 $purple : #4208A1;
@@ -19,6 +19,47 @@ body {
   background: $red;
   color: $white;
 }
+
+.app-container {
+  font-family: $sans-serif;
+  padding: 6em 8em;
+}
+
+.alerts-container {
+  background: $white;
+  border-radius: .6em;
+  box-shadow: 0 .5em 0 darken($red, 15%);
+  color: $black;
+  margin: 1em 0;
+  padding: .8em 1em 1.2em;
+}
+
+.alerts-heading {
+  border-bottom: solid 2px $red;
+}
+
+.alert {
+  margin-bottom: .5em;
+  padding: .3em .4em .4em;
+  opacity: .6;
+  &:first-of-type {
+    margin-bottom: 1em;
+    opacity: 1;
+  }
+
+  &:hover {
+    opacity: 1;
+  }
+}
+
+.alert-warning {
+  border-left: solid .2em $red;
+}
+
+.alert-success {
+  border-left: solid .2em $green;
+}
+
 
 /*
  * PURE Breakpoints

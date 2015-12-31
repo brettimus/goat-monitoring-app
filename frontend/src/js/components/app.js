@@ -1,13 +1,16 @@
 const React = require("react");
-const rd3 = require("react-d3");
-const { ScatterChart } = rd3;
 
-const data = [{
-    name: "Hehes",
-    values: [ {x: 0, y: 10}, {x: 20, y: 40} ],
-}];
+const Chart = require("./chart");
+const Alerts = require("./alerts");
 
 const App = () => ({
+
+    addLoadDatum(loadDatum) {
+        this.props.store.dispatch({
+            type: "ADD_LOAD_DATUM",
+            loadDatum,
+        });
+    },
 
     componentDidMount() {
         this.startListeningForData();
@@ -15,6 +18,22 @@ const App = () => ({
 
     componentWillUnmount() {
         this.stopListeningForData();
+    },
+
+    handleData(data) {
+        const loadDatum = {
+            timestamp: new Date(),
+            loadavg: Math.random() * 2.5,
+        };
+
+        this.addLoadDatum(loadDatum);
+    },
+
+    dispatchAlert(message) {
+        this.props.store.dispatch({
+            type: "CREATE_ALERT",
+            message,
+        });
     },
 
     startListeningForData() {
@@ -25,35 +44,24 @@ const App = () => ({
         clearInterval(this._dataHandler);
     },
 
-    handleData(data) {
-        const loadDatum = {
-            x: + new Date(),
-            y: Math.random() * 2.5,
-        };
-        this.props.store.dispatch({
-            type: "ADD_LOAD_DATUM",
-            loadDatum,
-        });
-    },
-
     render() {
         let state = this.props.store.getState();
-        let data = [{
-            name: "loadavg",
-            values: state.loadData,
-        }];
+        let { loadData } = state;
+        let { alerts, lastTimestamp, twoMinuteAvg } = state;
+
         console.log("Current state: ", state);
+
         return (
-            <div style={{padding: "6em 8em"}}>
+            <div className="app-container">
                 <h1>
                     Hello!
                 </h1>
                 <p>Let's monitor some goats.</p>
-                <ScatterChart 
-                    data={data}
-                    width={500}
-                    height={400}
-                    title="Goats" />
+                <Chart loadData={loadData} />
+                <Alerts alerts={alerts} 
+                    currentTimestamp={lastTimestamp}
+                    currentTwoMinuteLoadavg={twoMinuteAvg} 
+                    dispatchAlert={ (m) => this.dispatchAlert(m) } />
             </div>
         );
     },

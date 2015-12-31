@@ -1,7 +1,7 @@
 {
-  "name": "boots-datadog-load-monitor",
+  "name": "boots-datadog-load-monitor-backend",
   "version": "0.0.0",
-  "description": "datadog code test, a load average monitoring tool",
+  "description": "datadog code test, the backend of a load average monitoring tool",
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

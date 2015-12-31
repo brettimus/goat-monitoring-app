@@ -1,23 +1,23 @@
 "use strict"
 const PORT = 1337;
-const os = require("os");
 const path = require("path");
 const app = require("express")();
 const http = require("http").Server(app);
 const io = require("socket.io")(http);
+const face = require("cool-ascii-faces");
+const emitLoadavgUpdate = require("./emit-loadavg");
 
-function letsDoThis() {
+function startServer() {
    app.get('/', rootHandler);
    io.on('connection', wsConnectionHandler);
-   http.listen(PORT, serverListening); 
+   http.listen(PORT, serverListeningHandler); 
 }
 
-module.exports = letsDoThis;
-
-
+module.exports = startServer;
 
 function rootHandler(request, response) {
-    response.sendFile(path.join(__dirname, "..", "index.html"));
+    let index = path.join(__dirname, "..", "index.html");
+    response.sendFile(index);
 }
 
 function wsConnectionHandler(socket) {
@@ -25,34 +25,12 @@ function wsConnectionHandler(socket) {
     console.log("Ooooh look! A wild connection appeared.");
 }
 
-function serverListening() {
+function serverListeningHandler() {
     startEmittingLoadavgData();
-    console.log("Node art listening to thou on port", PORT);
+    let serverFace = face();
+    console.log(serverFace, " Hello. I have my ear cupped against port", PORT + ". ", serverFace);
 }
 
 function startEmittingLoadavgData() {
-    setInterval(emitLoadavgUpdate, 1000);
-}
-
-function emitLoadavgUpdate() {
-    io.emit('loadavg update', getLoadavgUpdateData());
-}
-
-function getLoadavgUpdateData() {
-    const timestamp_ms = getCurrentTimeMS();
-    const loadavgData = getLoadavg();
-    return Object.assign({ timestamp_ms }, loadavgData);
-}
-
-function getCurrentTimeMS() {
-    return +new Date();
-}
-
-function getLoadavg() {
-    const loadavg = os.loadavg();
-    return {
-        loadavg1: loadavg[0],
-        loadavg5: loadavg[1],
-        loadavg15: loadavg[2],
-    };
+    setInterval(() => emitLoadavgUpdate(io), 1000);
 }

@@ -6,20 +6,19 @@ don't be silly. this has nothing to do with goats.
 :goat: :goat: :goat:
 
 ## runit
-You need `node`, `npm`, and `make`. 
+You need `node`, `npm`, and `make`. and :goat:. 
 
 Since load average is a unixy concept, you should have `make`, right? right. 
 
-- install dependencies `npm i`
-
 ## wtf is going on here
+**:goat: this is not yet ready to be run holistically :goat:**
+_pending writeup_
 
 ### backend
 - serves the `index.html` file in the root of this project
 
 ### frontend
-- builds the `goats.min.js` file that we serve
-
+_pending writeup_
 
 ## original prompt
 

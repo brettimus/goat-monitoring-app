@@ -1,4 +1,5 @@
 const React = require("react");
+const io = require("socket.io-client");
 
 const Chart = require("./chart");
 const Alerts = require("./alerts");
@@ -23,20 +24,31 @@ const App = () => ({
     },
 
     handleData(data) {
-        const loadDatum = {
-            timestamp: new Date(),
-            loadavg: Math.random() * 2.5,
-        };
-
-        this.addLoadDatum(loadDatum);
+        if (__DEV__) {
+            const loadDatum = {
+                timestamp: new Date(),
+                loadavg: Math.random() * 2.5,
+            };            
+            this.addLoadDatum(loadDatum);
+            return;
+        }
+        let loadavg = data.loadavg1;
+        let { timestamp } = data;
+        this.addLoadDatum({ loadavg, timestamp });
     },
 
     startListeningForData() {
-        this._dataHandler = setInterval(() => this.handleData(), 1000)
+        if (__DEV__) {
+            this._dataHandler = setInterval(() => this.handleData(), 1000)            
+        }
+        else {
+            let socket = io();
+            socket.on('loadavg update', (data) => this.handleData(data));
+        }
     },
 
     stopListeningForData() {
-        clearInterval(this._dataHandler);
+        if (__DEV__) clearInterval(this._dataHandler);
     },
 
     render() {

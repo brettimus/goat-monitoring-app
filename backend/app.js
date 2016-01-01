@@ -1,5 +1,4 @@
 "use strict"
-
 const PORT = 1337;
 const path = require("path");
 const express = require("express");
@@ -22,12 +21,8 @@ function startServer(options) {
 module.exports = startServer;
 
 function createRootHandler(pathToIndex) {
-
-  return rootHandler;
-
-  function rootHandler(request, response) {
-      let index = pathToIndex;
-      response.sendFile(index);
+  return function rootHandler(request, response) {
+      response.sendFile(pathToIndex);
   }  
 }
 
@@ -38,7 +33,7 @@ function wsConnectionHandler(socket) {
 
 function serverListeningHandler() {
     startEmittingLoadavgData();
-    let serverFace = face();
+    const serverFace = face();
     console.log(serverFace, " Hello. I have my ear cupped against port", PORT + ". ", serverFace);
 }
 

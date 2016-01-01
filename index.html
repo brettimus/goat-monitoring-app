@@ -9,9 +9,9 @@
 
     <link rel="apple-touch-icon" href="apple-touch-icon.png">
     <!-- Remember the favicon! -->
-    <link rel="stylesheet" href="dist/html5-boilerplate.css">
-    <link rel="stylesheet" href="dist/pure.min.css">
-    <link rel="stylesheet" href="dist/pure-grids-responsive.min.css">
+    <link rel="stylesheet" href="html5-boilerplate.css">
+    <link rel="stylesheet" href="pure.min.css">
+    <link rel="stylesheet" href="pure-grids-responsive.min.css">
   </head>
   <body>
     <!--[if lt IE 8]>
@@ -28,18 +28,7 @@
             html.className = html.className.replace("no-js","js");
         })();
     </script>
-    <script>
-    (function setupWSConnection() {
-        var messages = document.getElementById("messages");
-        var socket = io();
-
-        socket.on('loadavg update', function(data) {
-          var newMessage = "<p>%data%</p>".replace("%data%", data.loadavg1);
-          messages.innerHTML = newMessage + messages.innerHTML;
-        });
-      })();
-    </script>
-    <script src="/tada.js"></script>
+    <script src="tada.js"></script>
     <script>
     /*** Google Analytics: change UA-XXXXX-X to be the app's ID. ***
 

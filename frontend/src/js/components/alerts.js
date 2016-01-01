@@ -3,6 +3,10 @@ const moment = require("moment");
 const { capitalize, roundToThousandths } = require("../utils");
 
 const Alert = () => ({
+    message() {
+        return this.props.message.replace("{theme}", this.props.theme);
+    },
+
     renderAlertData() {
         let { twoMinuteAvg, timestamp } = this.props;
         if (twoMinuteAvg) {
@@ -32,7 +36,7 @@ const Alert = () => ({
         return (
             <article className={classNames.join(" ")}>
                 <div className="alert-message">
-                    {this.props.message}
+                    {this.message()}
                 </div>
                 <footer className="alert-timestamp">
                     {moment(this.props.timestamp).fromNow()}

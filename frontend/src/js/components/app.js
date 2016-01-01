@@ -42,7 +42,7 @@ const App = () => ({
     render() {
         let state = this.props.store.getState();
         let { loadData } = state;
-        let { alerts, lastTimestamp, twoMinuteAvg } = state;
+        let { alerts, lastTimestamp } = state;
         let { themeName } = state;
         console.log("Current state: ", state);
 

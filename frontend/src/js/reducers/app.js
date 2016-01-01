@@ -9,8 +9,6 @@ const defaultLoadDatum = {
 }
 
 const initialState = {
-  twoMinuteAvg: null,
-  isInAlertMode: false,
   loadData: [], // most recent data come first
   alerts: [],
   loadInterval, // ms (show data in 10 second intervals)
@@ -35,56 +33,58 @@ function toggleTheme(state, action) {
 }
 
 function addLoadDatum(state, action) {
-  const oldLoadData = state.loadData;
-  const newLoadDatum = action.loadDatum;
 
-  let loadData = [newLoadDatum, ...oldLoadData];
-  loadData = filterPastTenMinutes(loadData);
+  let loadData = [action.loadDatum, ...state.loadData];
+  loadData = getPastTenMinutes(loadData);
 
-  const twoMinuteAvg = getTwoMinuteAvg(loadData);
-
-  const wasInAlertMode = state.isInAlertMode;
-  const isInAlertMode = isLoadavgAvgHigh(twoMinuteAvg);
-
-  let { alerts } = state;
-
-  if (!wasInAlertMode && isInAlertMode) {
-    // add warning alert
-    let newAlert = createWarningAlert(state, action, { twoMinuteAvg });
-    alerts = [ newAlert, ...alerts ];
-  }
-  if (wasInAlertMode && !isInAlertMode) {
-    // add "resolved" alert
-    let newAlert = createResolvedAlert(state, action, { twoMinuteAvg })
-    alerts = [ newAlert, ...alerts ];
-  }
+  const prevTwoMinuteAvg = getTwoMinuteAvg(state.loadData);
+  const nextTwoMinuteAvg = getTwoMinuteAvg(loadData);
+  const alerts = getAlerts(state, action, { prevTwoMinuteAvg, nextTwoMinuteAvg });
 
   return { 
     ...state, 
     loadData, 
     alerts, 
-    twoMinuteAvg, 
-    isInAlertMode
   };
 }
 
+function getAlerts(state, action, twoMinuteAvgs) {
+  const { prevTwoMinuteAvg, nextTwoMinuteAvg } = twoMinuteAvgs;
+  const wasInAlertMode = isLoadavgAvgHigh(prevTwoMinuteAvg);
+  const isInAlertMode = isLoadavgAvgHigh(nextTwoMinuteAvg);
+
+  let { alerts } = state;
+
+  if (!wasInAlertMode && isInAlertMode) {
+    let twoMinuteAvg = nextTwoMinuteAvg;
+    let alert = createWarningAlert(state, action, { twoMinuteAvg })
+    return [ alert, ...alerts ];
+  }
+
+  if (wasInAlertMode && !isInAlertMode) {
+    let twoMinuteAvg = nextTwoMinuteAvg;
+    let alert = createResolvedAlert(state, action, { twoMinuteAvg })
+    return [ alert, ...alerts ];
+  }
+
+  return alerts;
+}
+
 function createResolvedAlert(state, action, { twoMinuteAvg }) {
-  let theme = state.themeName;
   let { timestamp } = action.loadDatum;
   return {
     type: "success",
-    message: `High ${theme} recovered`,
+    message: "High {theme} recovered",
     twoMinuteAvg,
     timestamp,
   };
 }
 
 function createWarningAlert(state, action, { twoMinuteAvg }) {
-  let theme = state.themeName;
   let { timestamp } = action.loadDatum;
   return {
     type: "warning",
-    message: `High ${theme} generated an alert`,
+    message: "High {theme} generated an alert",
     twoMinuteAvg,
     timestamp,
   };
@@ -92,7 +92,7 @@ function createWarningAlert(state, action, { twoMinuteAvg }) {
 
 // Both of these helpers assume each datum is 1 second 
 
-function filterPastTenMinutes(loadData) {
+function getPastTenMinutes(loadData) {
   const tenMinutes = 10;
   return loadData.slice(0, tenMinutes);
 }

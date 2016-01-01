@@ -42,25 +42,23 @@ body {
 
 .app-container {
   font-family: $sans-serif;
-  padding: 6em 8em;
+  padding: 2em 8em;
 }
 
 .container {
   background: $white;
   border-radius: .6em;
-  box-shadow: 0 0 5px #ccc;
   color: $black;
   margin: 1em 0;
   padding: .8em 1em 1.2em;
 }
 
 .container--charts {
-  box-shadow: 0 .5em 0 lighten($black, 15%),
-              0 0 .4em $white;
+  box-shadow: 0 0 .6em #ccc;
 }
 
 .container--alerts {
-  box-shadow: 0 .5em 0 $red;
+  box-shadow: 0 .5em 0 $yellow;
 }
 
 .alerts-heading {

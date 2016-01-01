@@ -4,6 +4,7 @@
   "description": "datadog code test, the frontend of a load average monitoring tool",
   "main": "src/index.js",
   "dependencies": {
+    "moment": "^2.10.6",
     "react": "^0.14.3",
     "react-d3": "^0.4.0",
     "react-dom": "^0.14.3",

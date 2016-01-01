@@ -1,23 +1,34 @@
 "use strict"
+
 const PORT = 1337;
 const path = require("path");
-const app = require("express")();
+const express = require("express");
+const app = express();
 const http = require("http").Server(app);
 const io = require("socket.io")(http);
 const face = require("cool-ascii-faces");
 const emitLoadavgUpdate = require("./emit-loadavg");
 
-function startServer() {
-   app.get('/', rootHandler);
-   io.on('connection', wsConnectionHandler);
-   http.listen(PORT, serverListeningHandler); 
+function startServer(options) {
+  const pathToIndex = path.join(__dirname, options.pathToIndex);
+  const pathToAssets = path.join(__dirname, options.pathToAssets);
+
+  app.use(express.static(pathToAssets));
+  app.get('/', createRootHandler(pathToIndex));
+  io.on('connection', wsConnectionHandler);
+  http.listen(PORT, serverListeningHandler); 
 }
 
 module.exports = startServer;
 
-function rootHandler(request, response) {
-    let index = path.join(__dirname, "..", "index.html");
-    response.sendFile(index);
+function createRootHandler(pathToIndex) {
+
+  return rootHandler;
+
+  function rootHandler(request, response) {
+      let index = pathToIndex;
+      response.sendFile(index);
+  }  
 }
 
 function wsConnectionHandler(socket) {

@@ -11,6 +11,7 @@ const defaultLoadDatum = {
 const initialState = {
   loadData: [], // most recent data come first
   alerts: [],
+  maxAlertHistory: 100,
   loadInterval, // ms (show data in 10 second intervals)
   loadSpan,     // ms (show 10 mins of data)
   themeName: "load",
@@ -33,13 +34,14 @@ function toggleTheme(state, action) {
 }
 
 function addLoadDatum(state, action) {
-
+  let { maxAlertHistory } = state;
   let loadData = [action.loadDatum, ...state.loadData];
   loadData = getPastTenMinutes(loadData);
 
   const prevTwoMinuteAvg = getTwoMinuteAvg(state.loadData);
   const nextTwoMinuteAvg = getTwoMinuteAvg(loadData);
-  const alerts = getAlerts(state, action, { prevTwoMinuteAvg, nextTwoMinuteAvg });
+  let alerts = getAlerts(state, action, { prevTwoMinuteAvg, nextTwoMinuteAvg });
+  alerts = alerts.slice(0, maxAlertHistory);
 
   return { 
     ...state, 

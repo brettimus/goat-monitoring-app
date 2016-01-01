@@ -1,7 +1,32 @@
 const React = require("react");
 const moment = require("moment");
+const { capitalize, roundToThousandths } = require("../utils");
 
 const Alert = () => ({
+    renderAlertData() {
+        let { twoMinuteAvg, timestamp } = this.props;
+        if (twoMinuteAvg) {
+            return (
+                <table>
+                <thead>
+                    <tr>
+                        <th>{capitalize(this.props.theme)}</th>
+                        <th>Timestamp</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>{roundToThousandths(twoMinuteAvg)}</td>
+                        <td>
+                            {moment(timestamp).format("h:mm:ss a (MMM Do, YYYY)")}
+                        </td>
+                    </tr>
+                </tbody>
+                </table>
+            );
+        }
+    },
+
     render() {
         let classNames = ["alert", "alert--" + this.props.type ];
         return (
@@ -12,6 +37,9 @@ const Alert = () => ({
                 <footer className="alert-timestamp">
                     {moment(this.props.timestamp).fromNow()}
                 </footer>
+                <div className="alert-data">
+                    {this.renderAlertData()}
+                </div>
             </article>
         );
     },
@@ -20,7 +48,7 @@ const Alert = () => ({
 const Alerts = () => ({
 
     createAlert(alert, key) {
-        return <Alert {...alert} key={key} />;
+        return <Alert {...alert} key={key} theme={this.props.theme} />;
     },
 
     getSubheading() {
@@ -33,7 +61,7 @@ const Alerts = () => ({
     },
 
     renderAlerts() {
-        return this.truncate(this.props.alerts).map(this.createAlert);
+        return this.truncate(this.props.alerts).map(this.createAlert, this);
     },
 
     truncate(alerts, n=10) {

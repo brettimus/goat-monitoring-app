@@ -1,4 +1,4 @@
-module.exports = { average, capitalize };
+module.exports = { average, capitalize, roundToThousandths };
 
 function average(numbers) {
   if (numbers.length === 0) return null;
@@ -12,4 +12,8 @@ function average(numbers) {
 
 function capitalize(string) {
     return string.charAt(0).toUpperCase() + string.slice(1);
+}
+
+function roundToThousandths(n) {
+    return Math.round(n * 1000) / 1000;
 }

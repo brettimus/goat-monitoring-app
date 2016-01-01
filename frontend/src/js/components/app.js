@@ -3,6 +3,8 @@ const React = require("react");
 const Chart = require("./chart");
 const Alerts = require("./alerts");
 
+const ThemeButton = require("./theme-button");
+
 const App = () => ({
 
     addLoadDatum(loadDatum) {
@@ -46,13 +48,17 @@ const App = () => ({
 
         return (
             <div className="app-container">
-                <h1>
-                    Hello!
-                </h1>
-                <p>Let's monitor some { themeName }.</p>
-                <Chart theme={themeName} loadData={loadData} />
-                <Alerts alerts={alerts}
-                    theme={themeName} />
+                <nav className="nav"> 
+                    <ThemeButton theme={themeName}  store={this.props.store} />
+                </nav>
+                <header>
+                    <h1>
+                        Hello!
+                    </h1>
+                    <p>Let's monitor some { themeName }.</p>
+                </header>
+                <Chart loadData={loadData} theme={themeName} />
+                <Alerts alerts={alerts} theme={themeName} />
             </div>
         );
     },

@@ -18,40 +18,21 @@ const initialState = {
   themeName: "load",
 };
 
-// initialState.loadData = getInitialLoadData
-
-// *** loadDatum *** 
-//
-// it looks like this:
-/*
-{
-  x: Number,
-  y: Date,
-}
-*/
-
-// TODO:
-//
-// *** alert *** 
-//
-// it _should_ look like this:
-/*
-{
-  type: String,
-  timestamp: String,
-  message: String,
-}
-*/
-
 const reducer = (state = initialState, action) => {
   switch (action.type) {
     case "ADD_LOAD_DATUM": return addLoadDatum(state, action);
-    case "CREATE_ALERT"  : return createAlert(state, action);
+    case "TOGGLE_THEME"  : return toggleTheme(state, action);
     default              : return state;
   }
 };
 
 module.exports = reducer;
+
+function toggleTheme(state, action) {
+  let prevTheme = state.themeName;
+  let themeName = (prevTheme === "goat") ? "load" : "goat";
+  return { ...state, themeName };
+}
 
 function addLoadDatum(state, action) {
   const oldLoadData = state.loadData;
@@ -67,13 +48,14 @@ function addLoadDatum(state, action) {
 
   let { alerts } = state;
 
-  if (isInAlertMode) {
+  if (!wasInAlertMode && isInAlertMode) {
+    // add warning alert
     let newAlert = createWarningAlert(state, action, { twoMinuteAvg });
     alerts = [ newAlert, ...alerts ];
   }
   if (wasInAlertMode && !isInAlertMode) {
     // add "resolved" alert
-    let newAlert = createResolvedAlert(state, action)
+    let newAlert = createResolvedAlert(state, action, { twoMinuteAvg })
     alerts = [ newAlert, ...alerts ];
   }
 
@@ -86,12 +68,13 @@ function addLoadDatum(state, action) {
   };
 }
 
-function createResolvedAlert(state, action) {
+function createResolvedAlert(state, action, { twoMinuteAvg }) {
   let theme = state.themeName;
   let { timestamp } = action.loadDatum;
   return {
     type: "success",
-    message: `High ${theme} resolved`,
+    message: `High ${theme} recovered`,
+    twoMinuteAvg,
     timestamp,
   };
 }
@@ -101,7 +84,8 @@ function createWarningAlert(state, action, { twoMinuteAvg }) {
   let { timestamp } = action.loadDatum;
   return {
     type: "warning",
-    message: `High ${theme} generated an alert. ${theme} = ${twoMinuteAvg}`,
+    message: `High ${theme} generated an alert`,
+    twoMinuteAvg,
     timestamp,
   };
 }

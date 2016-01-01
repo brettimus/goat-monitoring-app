@@ -1,13 +1,24 @@
 const { average } = require("../utils");
 
+const loadInterval = 10000;
+const loadSpan = 10 * 60 * 1000;
+
+const defaultLoadDatum = {
+  timestamp: null,
+  loadavg: 0,
+}
+
 const initialState = {
   twoMinuteAvg: null,
   isInAlertMode: false,
   loadData: [], // most recent data come first
   alerts: [],
-  loadInterval: 10000, // ms (show data in 10 second intervals)
-  loadSpan: 10 * 60 * 1000, // ms (show 10 mins of data)
+  loadInterval, // ms (show data in 10 second intervals)
+  loadSpan,     // ms (show 10 mins of data)
+  themeName: "load",
 };
+
+// initialState.loadData = getInitialLoadData
 
 // *** loadDatum *** 
 //
@@ -51,33 +62,20 @@ function addLoadDatum(state, action) {
 
   const twoMinuteAvg = getTwoMinuteAvg(loadData);
 
-  const currentAlertMode = state.isInAlertMode;
-  const nextAlertMode = isLoadavgAvgHigh(twoMinuteAvg);
-
-  const currentTimestamp = newLoadDatum.timestamp;
+  const wasInAlertMode = state.isInAlertMode;
+  const isInAlertMode = isLoadavgAvgHigh(twoMinuteAvg);
 
   let { alerts } = state;
 
-  if (nextAlertMode) {
-    let newAlert = {
-      type: "warning",
-      message: `High load alert (${twoMinuteAvg})`,
-      timestamp: currentTimestamp,
-    };
-
+  if (isInAlertMode) {
+    let newAlert = createWarningAlert(state, action, { twoMinuteAvg });
     alerts = [ newAlert, ...alerts ];
   }
-  if (currentAlertMode && !nextAlertMode) {
+  if (wasInAlertMode && !isInAlertMode) {
     // add "resolved" alert
-    let newAlert = {
-      type: "success",
-      message: "High load resolved",
-      timestamp: currentTimestamp,
-    };
+    let newAlert = createResolvedAlert(state, action)
     alerts = [ newAlert, ...alerts ];
   }
-
-  const isInAlertMode = nextAlertMode;
 
   return { 
     ...state, 
@@ -85,6 +83,26 @@ function addLoadDatum(state, action) {
     alerts, 
     twoMinuteAvg, 
     isInAlertMode
+  };
+}
+
+function createResolvedAlert(state, action) {
+  let theme = state.themeName;
+  let { timestamp } = action.loadDatum;
+  return {
+    type: "success",
+    message: `High ${theme} resolved`,
+    timestamp,
+  };
+}
+
+function createWarningAlert(state, action, { twoMinuteAvg }) {
+  let theme = state.themeName;
+  let { timestamp } = action.loadDatum;
+  return {
+    type: "warning",
+    message: `High ${theme} generated an alert. ${theme} = ${twoMinuteAvg}`,
+    timestamp,
   };
 }
 

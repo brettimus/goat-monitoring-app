@@ -16,7 +16,7 @@ $semi   : 600;
 
 html,
 body {
-  background: $red;
+  background: $black;
   color: $white;
 }
 
@@ -25,22 +25,37 @@ body {
   padding: 6em 8em;
 }
 
-.alerts-container {
+.container {
   background: $white;
   border-radius: .6em;
-  box-shadow: 0 .5em 0 darken($red, 15%);
   color: $black;
   margin: 1em 0;
   padding: .8em 1em 1.2em;
 }
 
+.container--charts {
+  box-shadow: 0 .5em 0 lighten($black, 15%);
+
+}
+
+.container--alerts {
+  box-shadow: 0 .5em 0 $red;
+}
+
 .alerts-heading {
-  border-bottom: solid 2px $red;
+  border-bottom: solid 2px $black;
+}
+
+.alerts-heading-sub {
+  display: inline-block;
+  font-size: 65%;
+  font-weight: $light;
+  margin-left: .5em;
 }
 
 .alert {
   margin-bottom: .5em;
-  padding: .3em .4em .4em;
+  padding: .2em .4em;
   opacity: .6;
   &:first-of-type {
     margin-bottom: 1em;
@@ -52,11 +67,22 @@ body {
   }
 }
 
-.alert-warning {
+.alert-message {
+
+}
+
+.alert-timestamp {
+  color: lighten($black, 15%);
+  font-size: 80%;
+  font-style: italic;
+  font-weight: $light;
+}
+
+.alert--warning {
   border-left: solid .2em $red;
 }
 
-.alert-success {
+.alert--success {
   border-left: solid .2em $green;
 }
 

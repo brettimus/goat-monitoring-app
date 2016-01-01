@@ -1,7 +1,7 @@
 const React = require("react");
 const { AreaChart }  = require("react-d3");
 const moment = require("moment");
-
+const { capitalize } = require("../utils");
 const Chart = () => ({
 
     getChartData() {
@@ -12,10 +12,15 @@ const Chart = () => ({
         }];
     },
 
+    getTitle() {
+        let { theme } = this.props;
+        let title = capitalize(theme)
+        return title;
+    },
+
     transformLoadData(loadData) {
         return loadData.map((d, i) => {
-            // let x = moment(d.timestamp).fromNow();
-            const x = i; // d.timestamp;
+            const x = i + 1;
             const y = d.loadavg;
             return { x, y };
         });
@@ -35,16 +40,19 @@ const Chart = () => ({
         };
 
         return (
-            <AreaChart 
-                data={data}
-                width={600}
-                height={400}
-                viewBoxObject={viewBox}
-                xAxisTickInterval={xAxisTickInterval}
-                title="Goats" />
+            <div className="container container--charts">
+                <AreaChart 
+                    data={data}
+                    width={600}
+                    height={400}
+                    viewBoxObject={viewBox}
+                    xAxisTickInterval={xAxisTickInterval}
+                    title={this.getTitle()} />
+            </div>
         );
-    }
-})
+    },
+
+});
 
 
 module.exports = Chart;

@@ -29,13 +29,6 @@ const App = () => ({
         this.addLoadDatum(loadDatum);
     },
 
-    dispatchAlert(message) {
-        this.props.store.dispatch({
-            type: "CREATE_ALERT",
-            message,
-        });
-    },
-
     startListeningForData() {
         this._dataHandler = setInterval(() => this.handleData(), 1000)
     },
@@ -48,7 +41,7 @@ const App = () => ({
         let state = this.props.store.getState();
         let { loadData } = state;
         let { alerts, lastTimestamp, twoMinuteAvg } = state;
-
+        let { themeName } = state;
         console.log("Current state: ", state);
 
         return (
@@ -56,12 +49,10 @@ const App = () => ({
                 <h1>
                     Hello!
                 </h1>
-                <p>Let's monitor some goats.</p>
-                <Chart loadData={loadData} />
-                <Alerts alerts={alerts} 
-                    currentTimestamp={lastTimestamp}
-                    currentTwoMinuteLoadavg={twoMinuteAvg} 
-                    dispatchAlert={ (m) => this.dispatchAlert(m) } />
+                <p>Let's monitor some { themeName }.</p>
+                <Chart theme={themeName} loadData={loadData} />
+                <Alerts alerts={alerts}
+                    theme={themeName} />
             </div>
         );
     },

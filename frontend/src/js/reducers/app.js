@@ -34,14 +34,12 @@ function toggleTheme(state, action) {
 }
 
 function addLoadDatum(state, action) {
-  let { maxAlertHistory } = state;
   let loadData = [action.loadDatum, ...state.loadData];
   loadData = getPastTenMinutes(loadData);
 
   const prevTwoMinuteAvg = getTwoMinuteAvg(state.loadData);
   const nextTwoMinuteAvg = getTwoMinuteAvg(loadData);
-  let alerts = getAlerts(state, action, { prevTwoMinuteAvg, nextTwoMinuteAvg });
-  alerts = alerts.slice(0, maxAlertHistory);
+  const alerts = getAlerts(state, action, { prevTwoMinuteAvg, nextTwoMinuteAvg });
 
   return { 
     ...state, 
@@ -51,6 +49,7 @@ function addLoadDatum(state, action) {
 }
 
 function getAlerts(state, action, twoMinuteAvgs) {
+  const { maxAlertHistory } = state;
   const { prevTwoMinuteAvg, nextTwoMinuteAvg } = twoMinuteAvgs;
   const wasInAlertMode = isLoadavgAvgHigh(prevTwoMinuteAvg);
   const isInAlertMode = isLoadavgAvgHigh(nextTwoMinuteAvg);
@@ -60,13 +59,13 @@ function getAlerts(state, action, twoMinuteAvgs) {
   if (!wasInAlertMode && isInAlertMode) {
     let twoMinuteAvg = nextTwoMinuteAvg;
     let alert = createWarningAlert(state, action, { twoMinuteAvg })
-    return [ alert, ...alerts ];
+    return [ alert, ...alerts ].slice(0, maxAlertHistory);
   }
 
   if (wasInAlertMode && !isInAlertMode) {
     let twoMinuteAvg = nextTwoMinuteAvg;
     let alert = createResolvedAlert(state, action, { twoMinuteAvg })
-    return [ alert, ...alerts ];
+    return [ alert, ...alerts ].slice(0, maxAlertHistory);
   }
 
   return alerts;

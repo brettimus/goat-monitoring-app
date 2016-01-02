@@ -2,33 +2,42 @@ const React = require("react");
 const moment = require("moment");
 const { capitalize, roundToThousandths } = require("../utils");
 
+const AlertData = () => ({
+    render() {
+        let { theme, twoMinuteAvg, timestamp } = this.props;
+        return (
+            <table className="alert-data-table">
+            <thead>
+                <tr>
+                    <th>
+                       {capitalize(theme)}
+                    </th>
+                    <th>Time</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>{roundToThousandths(twoMinuteAvg)}</td>
+                    <td>
+                        {moment(timestamp).format("h:mm:ss a")}
+                        <span className="alert-timestamp">
+                            {moment(timestamp).format("(MMM Do, YYYY)")}
+                        </span>
+                    </td>
+                </tr>
+            </tbody>
+            </table>
+        );
+    },
+});
+
 const Alert = () => ({
     message() {
         return this.props.message.replace("{theme}", this.props.theme);
     },
 
     renderAlertData() {
-        let { twoMinuteAvg, timestamp } = this.props;
-        if (twoMinuteAvg) {
-            return (
-                <table>
-                <thead>
-                    <tr>
-                        <th>{capitalize(this.props.theme)}</th>
-                        <th>Timestamp</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>{roundToThousandths(twoMinuteAvg)}</td>
-                        <td>
-                            {moment(timestamp).format("h:mm:ss a (MMM Do, YYYY)")}
-                        </td>
-                    </tr>
-                </tbody>
-                </table>
-            );
-        }
+
     },
 
     render() {
@@ -37,12 +46,12 @@ const Alert = () => ({
             <article className={classNames.join(" ")}>
                 <div className="alert-message">
                     {this.message()}
+                    <span className="alert-timestamp alert-timestamp--relative">
+                        {moment(this.props.timestamp).fromNow()}
+                    </span>
                 </div>
-                <footer className="alert-timestamp">
-                    {moment(this.props.timestamp).fromNow()}
-                </footer>
                 <div className="alert-data">
-                    {this.renderAlertData()}
+                    <AlertData {...this.props}  />
                 </div>
             </article>
         );
@@ -58,10 +67,10 @@ const Alerts = () => ({
     getSubheading() {
         let alerts = this.truncate(this.props.alerts);
         let { theme } = this.props;
-        if (alerts.length > 0) {
-            return `Displaying ${alerts.length} most recent ${theme} alerts.`;
-        }
-        return `No ${theme} alerts to show!`;
+        if (alerts.length === 0) return `No ${theme} alerts to show!`;
+
+        // let count = alerts.length > 1 ? alerts.length : "";
+        // return `Displaying ${count} most recent ${theme} alerts.`;
     },
 
     renderAlerts() {

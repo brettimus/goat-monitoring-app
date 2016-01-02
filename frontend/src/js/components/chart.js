@@ -43,7 +43,7 @@ const Chart = () => ({
             <div className="container container--charts">
                 <AreaChart 
                     data={data}
-                    width={600}
+                    width={"100%"}
                     height={400}
                     viewBoxObject={viewBox}
                     xAxisTickInterval={xAxisTickInterval}

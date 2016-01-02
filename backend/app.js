@@ -5,8 +5,10 @@ const express = require("express");
 const app = express();
 const http = require("http").Server(app);
 const io = require("socket.io")(http);
-const face = require("cool-ascii-faces");
 const emitLoadavgUpdate = require("./emit-loadavg");
+const printListeningMessage = require("./listening-message");
+
+module.exports = startServer;
 
 function startServer(options) {
   const pathToIndex = path.join(__dirname, options.pathToIndex);
@@ -16,9 +18,8 @@ function startServer(options) {
   app.get('/', createRootHandler(pathToIndex));
   io.on('connection', wsConnectionHandler);
   http.listen(PORT, serverListeningHandler); 
-}
 
-module.exports = startServer;
+}
 
 function createRootHandler(pathToIndex) {
   return function rootHandler(request, response) {
@@ -28,15 +29,14 @@ function createRootHandler(pathToIndex) {
 
 function wsConnectionHandler(socket) {
     // For debugging
-    console.log("Ooooh look! A wild connection appeared.");
+    console.log("Ooooh look! A wild websocket connection appeared.");
 }
 
 function serverListeningHandler() {
-    startEmittingLoadavgData();
-    const serverFace = face();
-    console.log(serverFace, " Hello. I have my ear cupped against port", PORT + ". ", serverFace);
+    startEmittingLoadavgData(io);
+    printListeningMessage(PORT);
 }
 
-function startEmittingLoadavgData() {
-    setInterval(() => emitLoadavgUpdate(io), 1000);
+function startEmittingLoadavgData(io, interval) {
+    setInterval(() => emitLoadavgUpdate(io), interval);
 }

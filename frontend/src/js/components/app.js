@@ -1,10 +1,9 @@
 const React = require("react");
 const io = require("socket.io-client");
 
-const Chart = require("./chart");
 const Alerts = require("./alerts");
-
-const ThemeButton = require("./theme-button");
+const Chart = require("./chart");
+const Nav = require("./nav");
 
 const App = () => ({
 
@@ -12,6 +11,13 @@ const App = () => ({
         this.props.store.dispatch({
             type: "ADD_LOAD_DATUM",
             loadDatum,
+        });
+    },
+
+    addRandomLoadDatum() {
+        this.addLoadDatum({
+            timestamp: new Date(),
+            loadavg: Math.random() * 2.5,
         });
     },
 
@@ -25,11 +31,7 @@ const App = () => ({
 
     handleData(data) {
         if (__DEV__) {
-            const loadDatum = {
-                timestamp: new Date(),
-                loadavg: Math.random() * 2.5,
-            };            
-            this.addLoadDatum(loadDatum);
+            this.addRandomLoadDatum();
             return;
         }
         let loadavg = data.loadavg1;
@@ -39,30 +41,34 @@ const App = () => ({
 
     startListeningForData() {
         if (__DEV__) {
-            this._dataHandler = setInterval(() => this.handleData(), 1000)            
+            this._socket = setInterval(() => this.handleData(), 1000)
+            return;          
         }
-        else {
-            let socket = io();
-            socket.on('loadavg update', (data) => this.handleData(data));
-        }
+
+        let socket = io();
+        socket.on('loadavg update', (data) => this.handleData(data));
+        this._socket = socket;
     },
 
     stopListeningForData() {
-        if (__DEV__) clearInterval(this._dataHandler);
+        if (__DEV__) {
+            clearInterval(this._socket);
+        }
+        else {
+            this._socket.disconnect();
+        }
     },
 
     render() {
         let state = this.props.store.getState();
         let { loadData } = state;
-        let { alerts, lastTimestamp } = state;
+        let { alerts } = state;
         let { themeName } = state;
         console.log("Current state: ", state);
 
         return (
             <div className="app-container">
-                <nav className="nav"> 
-                    <ThemeButton theme={themeName}  store={this.props.store} />
-                </nav>
+                <Nav store={this.props.store} theme={themeName}></Nav>
                 <header>
                     <h1>
                         Hello!

@@ -12,7 +12,7 @@ const AlertData = () => ({
                     <th>
                        {capitalize(theme)}
                     </th>
-                    <th>Time</th>
+                    <th>Triggered at</th>
                 </tr>
             </thead>
             <tbody>

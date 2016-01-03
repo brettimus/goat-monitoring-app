@@ -1,3 +1,4 @@
+var path = require("path");
 var webpack = require("webpack");
 
 var definePlugin = new webpack.DefinePlugin({
@@ -5,10 +6,12 @@ var definePlugin = new webpack.DefinePlugin({
 });
 
 module.exports = {
-  entry: __dirname + '/src/index.js',
+  entry: {
+    tada: path.join(__dirname, '/src/index.js'),
+  },
   output: {
-    path: __dirname + '/dist/',
-    filename: 'tada.js',
+    path: path.join(__dirname, '/dist/'),
+    filename: '[name].js',
     publicPath: "/dist/",
   },
   module: {

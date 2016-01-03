@@ -15,17 +15,20 @@
     "start": "BUILD_DEV=true $(npm bin)/webpack-dev-server -c --port=1338 --hot --inline",
     "build": "make",
     "deploy": "echo \"Oooooops no deploy\" && exit 1",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "babel-node tests/index.js"
   },
   "author": "boots <brbeut@gmail.com> (http://brettim.us/)",
   "license": "ISC",
   "devDependencies": {
+    "babel-cli": "^6.3.17",
     "babel-core": "^6.3.17",
     "babel-loader": "^6.2.0",
     "babel-preset-es2015": "^6.3.13",
     "babel-preset-react": "^6.3.13",
     "babel-preset-stage-2": "^6.3.13",
     "css-loader": "^0.23.0",
+    "deep-freeze": "0.0.1",
+    "expect": "^1.13.4",
     "node-sass": "^3.4.2",
     "sass-loader": "^3.1.2",
     "style-loader": "^0.13.0",

@@ -1,6 +1,6 @@
 const { addLoadDatum, toggleTheme } = require("./app-actions");
 
-const loadInterval = 10000;
+const loadInterval = 1000;
 const loadSpan = 10 * 60 * 1000;
 
 const initialState = {
@@ -8,8 +8,8 @@ const initialState = {
   alerts: [],
   maxAlertHistory: 100,
   loadAlertThreshold: 1.2,
-  loadInterval,         // ms (show data in 10 second intervals)
-  loadSpan,             // ms (show 10 mins of data)
+  loadInterval,         // ms (store load data in 1s intervals)
+  loadSpan,             // ms (keep 10 mins of load data)
   themeName: "load",
 };
 

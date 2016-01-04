@@ -8,50 +8,56 @@ const nTimes = (n, f) => { while (n--) f() };
 const printGoat = () => console.log(GOAT);
 const getAlertsFromLoadData = require("../src/js/reducers/app-actions-alerts");
 
-crossingIntoHighThresholdAddsAlert();
-crossingIntoHighThresholdAddsWarningAlert();
-crossingIntoLowThresholdAddsAlert();
-crossingIntoLowThresholdAddsSuccessAlert();
-remainingInHighThresholdDoesNotAddAlert();
-remainingInLowThresholdDoesNotAddAlert();
-nTimes(2, printGoat);
-console.log(GOAT, "  ", "Alert tests passed".green.underline);
-console.log(GOAT, "   You're good to goat, friend.".blue);
-nTimes(3, printGoat);
+module.exports = function testAlertLogic() {
+  crossingIntoHighThresholdAddsAlert();
+  crossingIntoHighThresholdAddsWarningAlert();
+  crossingIntoLowThresholdAddsAlert();
+  crossingIntoLowThresholdAddsSuccessAlert();
+  remainingInHighThresholdDoesNotAddAlert();
+  remainingInLowThresholdDoesNotAddAlert();
+  success();
+}
+
+function success() {
+  nTimes(2, printGoat);
+  console.log(GOAT, "  ", "Alert tests passed".green.underline);
+  console.log(GOAT, "   You're good to goat, friend.".blue);
+  nTimes(3, printGoat);
+}
 
 function crossingIntoHighThresholdAddsAlert() {
-  let { state, action, newLoadData } = getLowToHighMocks();
-  let alerts = getAlertsFromLoadData(state, action, newLoadData);
+  let { state, action, nextLoadData } = getLowToHighMocks();
+  let alerts = getAlertsFromLoadData(state, action, nextLoadData);
   expect(alerts.length).toEqual(state.alerts.length + 1);
 }
 
 function crossingIntoHighThresholdAddsWarningAlert() {
-  let { state, action, newLoadData } = getLowToHighMocks();
-  let newAlert = getAlertsFromLoadData(state, action, newLoadData)[0];
+  let { state, action, nextLoadData } = getLowToHighMocks();
+  let newAlert = getAlertsFromLoadData(state, action, nextLoadData)[0];
   expect(newAlert.type).toEqual("warning");
 }
 
 function crossingIntoLowThresholdAddsAlert() {
-  let { state, action, newLoadData } = getHighToLowMocks();
-  let alerts = getAlertsFromLoadData(state, action, newLoadData);
+  let { state, action, nextLoadData } = getHighToLowMocks();
+  let alerts = getAlertsFromLoadData(state, action, nextLoadData);
   expect(alerts.length).toEqual(state.alerts.length + 1);
 }
 
 function crossingIntoLowThresholdAddsSuccessAlert() {
-  let { state, action, newLoadData } = getHighToLowMocks();
-  let newAlert = getAlertsFromLoadData(state, action, newLoadData)[0];
+  let { state, action, nextLoadData } = getHighToLowMocks();
+  let newAlert = getAlertsFromLoadData(state, action, nextLoadData)[0];
   expect(newAlert.type).toEqual("success");
 }
 
 function remainingInHighThresholdDoesNotAddAlert() {
-  let { state, action, newLoadData } = getHighToHighMocks();
-  let alerts = getAlertsFromLoadData(state, action, newLoadData);
+  let { state, action, nextLoadData } = getHighToHighMocks();
+  let alerts = getAlertsFromLoadData(state, action, nextLoadData);
   expect(alerts.length).toEqual(state.alerts.length);
 }
 
 function remainingInLowThresholdDoesNotAddAlert() {
-  let { state, action, newLoadData } = getLowToLowMocks();
-  let alerts = getAlertsFromLoadData(state, action, newLoadData);
+  let { state, action, nextLoadData } = getLowToLowMocks();
+  let alerts = getAlertsFromLoadData(state, action, nextLoadData);
   expect(alerts.length).toEqual(state.alerts.length);
 }
 
@@ -60,32 +66,41 @@ function getLowToHighMocks() {
 }
 
 function getHighToLowMocks() {
-  return getLoadavgChangeMocks({ prevLoadavg: 2.2, nextLoadavg: 1 });
+  let prevAlerts = [ { type: "warning", }, ];
+  let prevLoadavg = 2.2;
+  let nextLoadavg = 1;
+  return getLoadavgChangeMocks({ prevLoadavg, nextLoadavg, prevAlerts });
 }
 
 function getHighToHighMocks() {
-  return getLoadavgChangeMocks({ prevLoadavg: 200, nextLoadavg: 250 });
+  let prevAlerts = [ { type: "warning", }, ];
+  let prevLoadavg = 250;
+  let nextLoadavg = 250;
+  return getLoadavgChangeMocks({ prevLoadavg, nextLoadavg, prevAlerts });
 }
 
 function getLowToLowMocks() {
   return getLoadavgChangeMocks({ prevLoadavg: 1, nextLoadavg: 1 });
 }
 
-function getLoadavgChangeMocks({ prevLoadavg, nextLoadavg }) {
-  let prevLoadData = [ getLoadDatumMock({ loadavg: prevLoadavg }) ];
-  let loadDatum = getLoadDatumMock({ loadavg: nextLoadavg });
+function getLoadavgChangeMocks({ prevLoadavg, nextLoadavg, prevAlerts=[] }) {
+  const MIN_OBS = 60; 
+  const prevLoadDatum = getLoadDatumMock({ loadavg: prevLoadavg, })
+  const prevLoadData = replicate(prevLoadDatum, MIN_OBS);
+  const loadDatum = getLoadDatumMock({ loadavg: nextLoadavg });
 
-  let state = getStateMock({ loadData: prevLoadData });
-  let action = { loadDatum };
-  let newLoadData = [loadDatum, ...prevLoadData];
+  const state = getStateMock({ loadData: prevLoadData, alerts: prevAlerts });  
+  const action = { loadDatum };
+  const nextLoadData = [loadDatum, ...prevLoadData];
 
-  return { state, action, newLoadData };
+  return { state, action, nextLoadData };
 }
 
 function getStateMock(props) {
   const defaults = {
     loadAlertThreshold: 2,
     loadData: [],
+    loadInterval: 1000,
     alerts: [],
   }
   return { ...defaults, ...props };
@@ -97,4 +112,10 @@ function getLoadDatumMock(props) {
     timestamp: new Date,
   };
   return { ...defaults, ...props };
+}
+
+function replicate(o, n) {
+  const result = []
+  while (n--) result.push(o);
+  return result;
 }

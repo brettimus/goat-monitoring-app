@@ -1,1 +1,1 @@
-require("./test-alert-logic");
+require("./test-alert-logic")();

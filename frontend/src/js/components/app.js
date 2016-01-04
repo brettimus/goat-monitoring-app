@@ -14,13 +14,6 @@ const App = () => ({
         });
     },
 
-    addRandomLoadDatum() {
-        this.addLoadDatum({
-            timestamp: new Date(),
-            loadavg: Math.random() * 2.5,
-        });
-    },
-
     componentDidMount() {
         this.startListeningForData();
     },
@@ -30,18 +23,21 @@ const App = () => ({
     },
 
     handleData(data) {
-        if (__DEV__) {
-            this.addRandomLoadDatum();
-            return;
-        }
-        let loadavg = data.loadavg1;
-        let { timestamp } = data;
-        this.addLoadDatum({ loadavg, timestamp });
+        this.addLoadDatum(data);
+    },
+
+    randomLoadDatum() {
+        return {
+            timestamp: new Date(),
+            loadavg1: Math.random() * 2.5,
+            loadavg5: Math.random() * 2.5,
+            loadavg15: Math.random() * 2.5,
+        };
     },
 
     startListeningForData() {
         if (__DEV__) {
-            this._socket = setInterval(() => this.handleData(), 1000)
+            this._socket = setInterval(() => this.handleData(this.randomLoadDatum()), 1000)
             return;          
         }
 
@@ -53,10 +49,10 @@ const App = () => ({
     stopListeningForData() {
         if (__DEV__) {
             clearInterval(this._socket);
+            return;
         }
-        else {
-            this._socket.disconnect();
-        }
+
+        this._socket.disconnect();
     },
 
     render() {

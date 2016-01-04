@@ -1,4 +1,4 @@
-const { getPastNMinutes } = require("./app-actions-load-data");
+const { createLoadDatum, trimLoadData } = require("./app-actions-load-data");
 const getAlertsFromLoadData = require("./app-actions-alerts");
 
 module.exports = {
@@ -13,8 +13,9 @@ function toggleTheme(state, action) {
 }
 
 function addLoadDatum(state, action) {
-  let loadData = [action.loadDatum, ...state.loadData];
-  loadData = getPastNMinutes(loadData, 10);
+  let loadDatum = createLoadDatum(state, action);
+  let loadData = [loadDatum, ...state.loadData];
+  loadData = trimLoadData(state, action, loadData);
 
   const alerts = getAlertsFromLoadData(state, action, loadData);
 

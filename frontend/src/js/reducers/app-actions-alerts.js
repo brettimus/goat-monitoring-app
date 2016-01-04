@@ -1,22 +1,24 @@
-const { getPastNMinutes, getTwoMinuteAvg } = require("./app-actions-load-data");
+const { getTwoMinuteLoadavg } = require("./app-actions-load-data");
 
 module.exports = getAlertsFromLoadData;
 
 function getAlertsFromLoadData(state, action, newLoadData) {
-  const prevTwoMinuteAvg = getTwoMinuteAvg(state.loadData);
-  const twoMinuteAvg = getTwoMinuteAvg(newLoadData);
-
-  const wasInAlertMode = isLoadavgAvgHigh(state, action, prevTwoMinuteAvg);
-  const isInAlertMode = isLoadavgAvgHigh(state, action, twoMinuteAvg);
-
   let { alerts } = state;
+
+  const twoMinuteAvg = getTwoMinuteLoadavg(state, action, newLoadData);
+
+  if (twoMinuteAvg === "NA") return alerts;
+
+  const wasInWarningMode = wasLastAlertWarning(state, action);
+  const isInWarningMode = isLoadavgAvgHigh(state, action, twoMinuteAvg);
+
   let newAlert = null;
 
-  if (!wasInAlertMode && isInAlertMode) {
+  if (!wasInWarningMode && isInWarningMode) {
     newAlert = createWarningAlert(state, action, { twoMinuteAvg });
   }
 
-  if (wasInAlertMode && !isInAlertMode) {
+  if (wasInWarningMode && !isInWarningMode) {
     newAlert = createResolvedAlert(state, action, { twoMinuteAvg })
   }
 
@@ -26,16 +28,6 @@ function getAlertsFromLoadData(state, action, newLoadData) {
   }
 
   return alerts;
-}
-
-function trimAlerts(state, action, alerts) {
-  const { maxAlertHistory } = state;
-  return alerts.slice(0, maxAlertHistory);
-}
-
-function addAlert(state, action, alert) {
-  const { alerts } = state;
-  return [ alert, ...alerts ];
 }
 
 function createResolvedAlert(state, action, { twoMinuteAvg }) {
@@ -58,10 +50,34 @@ function createWarningAlert(state, action, { twoMinuteAvg }) {
   };
 }
 
-function isLoadavgAvgHigh(state, action, loadavgAvg) {
+function wasLastAlertWarning(state, action) {
+  let { alerts } = state;
+  let lastAlert = latest(alerts);
+  return lastAlert && isWarning(lastAlert);
+}
+
+function isLoadavgAvgHigh(state, action, loadavg) {
   const threshold = state.loadAlertThreshold;
-  if (loadavgAvg > threshold) {
+  if (loadavg > threshold) {
     return true;
   }
   return false;
+}
+
+function addAlert(state, action, alert) {
+  const { alerts } = state;
+  return [ alert, ...alerts ];
+}
+
+function trimAlerts(state, action, alerts) {
+  const { maxAlertHistory } = state;
+  return alerts.slice(0, maxAlertHistory);
+}
+
+function isWarning(alert) {
+  return alert.type === "warning";
+}
+
+function latest(alerts) {
+  return alerts[0];
 }

@@ -1,6 +1,11 @@
+const GOAT = "🐐";
+
+require("colors"); // note: monkey-patches String.prototype
 const expect = require("expect");
 const deepFreeze = require("deep-freeze");
 
+const nTimes = (n, f) => { while (n--) f() };
+const printGoat = () => console.log(GOAT);
 const getAlertsFromLoadData = require("../src/js/reducers/app-actions-alerts");
 
 crossingIntoHighThresholdAddsAlert();
@@ -9,6 +14,10 @@ crossingIntoLowThresholdAddsAlert();
 crossingIntoLowThresholdAddsSuccessAlert();
 remainingInHighThresholdDoesNotAddAlert();
 remainingInLowThresholdDoesNotAddAlert();
+nTimes(2, printGoat);
+console.log(GOAT, "  ", "Alert tests passed".green.underline);
+console.log(GOAT, "   You're good to goat, friend.".blue);
+nTimes(3, printGoat);
 
 function crossingIntoHighThresholdAddsAlert() {
   let { state, action, newLoadData } = getLowToHighMocks();

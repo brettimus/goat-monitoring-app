@@ -119,7 +119,6 @@ A `loadDatum` object has the following form:
 ```javascript
 const loadDatum = {
 
-    
 };
 ```
 
@@ -170,6 +169,10 @@ Alerts should be actionable. A better version of this application would suggest 
 
 ### Frontend optimizations
 There are several inefficiencies in the frontend Redux code. At the current scale of the app, these inefficiencies are just noise. However, if more charts and data got added, the frontend code may beg a refactoring that focused on performance.
+
+### The Chart... Oh, The Chart
+- Should we really start with a bunch of zeroes?
+- Needs a more “realtime” feel (see: Bostock article)
 
 ## Reading Materials
 Alright. I realize that I may have used a lot of tools with which you might not be familiar. 

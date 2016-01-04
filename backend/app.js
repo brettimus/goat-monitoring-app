@@ -1,5 +1,7 @@
 "use strict"
 const PORT = 1337;
+const DATA_INTERVAL = 1000;
+
 const path = require("path");
 const express = require("express");
 const app = express();
@@ -33,7 +35,7 @@ function wsConnectionHandler(socket) {
 }
 
 function serverListeningHandler() {
-    startEmittingLoadavgData(io);
+    startEmittingLoadavgData(io, DATA_INTERVAL);
     printListeningMessage(PORT);
 }
 

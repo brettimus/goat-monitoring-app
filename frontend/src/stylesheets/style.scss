@@ -140,14 +140,16 @@ body {
   }
 }
 
-// Remove axes from d3 chart
-.rd3-areachart-xaxis,
-.rd3-areachart-yaxis {
-  path,
-  .tick line {
-    visibility: hidden !important;
-  }
+.chart-heading {
+  text-align: center;
 }
+
+.chart-heading-sub {
+  display: block;
+  font-size: 75%;
+  font-weight: $light;
+}
+
 
 /*
  * PURE Breakpoints

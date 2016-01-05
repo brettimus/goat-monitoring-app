@@ -45,11 +45,12 @@ If all the tests pass, you should see a colorful and friendly message in the con
 ### 4. Build the `frontend`
 From the project root, run:
 ```bash
+# patience! this might take a few seconds
 cd frontend && make
 ```
 
 ### 5. Run the app
-In the project root, run:
+From the project root, run:
 ```bash
 node .
 ```
@@ -61,11 +62,11 @@ The `index.js` file in the project root connects the `frontend` and the `backend
 - `pathToIndex`: Where the root html document is located
 - `pathToAssets`: Where the assets for the frontend application are located
 
+Our backend happens to serve the `index.html` file in the project root. This file expects that it can grab a `tada.js` file (served from the folder `frontend/dist`, our static asset directory). `tada.js` should in turn load the `frontend` build that consumes our `backend`.
+
 The server uses node's `os` module in conjunction with `socket.io` to broadcast system load data to interested parties over websockets via `"loadavg update"` events. 
 
-Speaking of those interested parties, how about that `frontend`? 
-
-Our backend  serves the `index.html` file in the project root. This file expects that it can find a `tada.js` file, which should in turn load the `frontend` build.
+Speaking of those interested parties, how about that `frontend`, eh? 
 
 The frontend is a standard React + Redux app built with webpack. There is only one action that modifies the application's state, and it is named `"ADD_LOAD_DATUM"`.
 
@@ -76,6 +77,9 @@ The production build listens for `"loadavg update"` events over websockets. When
 The alert logic is handled inside `frontend/src/js/reducers/app-actions-alerts.js`.
 
 ### backend
+
+> **TODO** MOVE THIS TO `backend` FOLDER
+
 - Is a thin `node/express` server 
 - Takes a configuration object with
     + the path to the root html document
@@ -95,6 +99,9 @@ const loadavgUpdateData = {
 ```
 
 ### frontend
+
+> **TODO** MOVE THIS TO `frontend` FOLDER
+
 - A standard `React` and `Redux` application built with `webpack`
 - Uses the `expect` library for testing
 - In production, listens for `"loadavg update"` events over websockets

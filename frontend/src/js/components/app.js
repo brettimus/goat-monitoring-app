@@ -57,9 +57,10 @@ const App = () => ({
 
     render() {
         let state = this.props.store.getState();
-        let { loadData } = state;
+        let { latestDatum, loadData } = state;
         let { alerts } = state;
         let { themeName } = state;
+        let buffer = state.chartDataBuffer;
         console.log("Current state: ", state);
 
         return (
@@ -71,7 +72,12 @@ const App = () => ({
                     </h1>
                     <p>Let's monitor some { themeName }.</p>
                 </header>
-                <Chart loadData={loadData} theme={themeName} />
+                <Chart store={this.props.store} 
+                        buffer={buffer} 
+                        latestDatum={latestDatum} 
+                        loadData={loadData} 
+                        theme={themeName} />
+
                 <Alerts alerts={alerts} theme={themeName} />
             </div>
         );

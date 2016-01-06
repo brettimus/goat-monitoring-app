@@ -37,7 +37,9 @@ function getTwoMinuteLoadavg(state, action, loadData=null) {
 function averageLoadDatumLoadavgs(loadDatum1, loadDatum2) {
     if (!(loadDatum1 && loadDatum2)) return "NA";
     const data = [...arguments];
-    return average(data.map( ({loadavg}) => loadavg ));
+    const loadavgs = data.map( ({loadavg}) => loadavg );
+    if (loadavgs.some( (d) => d === 0)) return "NA"; // don't average loadavg = 0
+    return average(loadavgs);
 }
 
 function latest(loadData) {

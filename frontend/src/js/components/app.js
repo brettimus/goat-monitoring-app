@@ -3,6 +3,7 @@ const io = require("socket.io-client");
 
 const Alerts = require("./alerts");
 const Chart = require("./chart");
+const Header = require("./header");
 const Nav = require("./nav");
 
 const App = () => ({
@@ -56,27 +57,27 @@ const App = () => ({
     },
 
     render() {
-        let state = this.props.store.getState();
-        let { latestDatum, loadData } = state;
-        let { alerts } = state;
-        let { themeName } = state;
-        let buffer = state.chartDataBuffer;
-        console.log("Current state: ", state);
+        const state = this.props.store.getState();
+        const { loadData } = state;
+        const { latestChartTimestamp, latestDatumTimestamp } = state;
+        const { chartUpdateInterval } = state;
+        const { alerts } = state;
+        const { themeName } = state;
+        const buffer = state.chartDataBuffer;
+
+        if (__DEV__) console.log("Current state: ", state);
 
         return (
             <div className="app-container">
                 <Nav store={this.props.store} theme={themeName}></Nav>
-                <header>
-                    <h1>
-                        Hello!
-                    </h1>
-                    <p>Let's monitor some { themeName }.</p>
-                </header>
+                <Header store={this.props.store} theme={themeName} />
                 <Chart store={this.props.store} 
+                        theme={themeName}
                         buffer={buffer} 
-                        latestDatum={latestDatum} 
-                        loadData={loadData} 
-                        theme={themeName} />
+                        data={loadData} 
+                        latestChartTimestamp={latestChartTimestamp}
+                        latestDatumTimestamp={latestDatumTimestamp} 
+                        chartUpdateInterval={chartUpdateInterval} />
 
                 <Alerts alerts={alerts} theme={themeName} />
             </div>

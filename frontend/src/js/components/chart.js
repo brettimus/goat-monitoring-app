@@ -1,23 +1,16 @@
-const React = require("react");
-const moment = require("moment");
-const { capitalize, head } = require("../utils");
-
-const c3 = require("c3");
 require("c3/c3.min.css");
+const c3 = require("c3");
+const React = require("react");
+const { capitalize, head, tail } = require("../utils");
 
-const BootsAreaChart = React.createClass({
+const RealTimeLineChart = React.createClass({
 
     getInitialState() {
-        return {
-            chart: null,
-            latestChartTimestamp: null,
-        };
+        return { chart: null };
     },
 
     componentDidMount() {
-        let chart = this.createChart();
-        let latestChartTimestamp = this.getLatestTimestamp();
-        this.setState({ chart, latestChartTimestamp });
+        this.createChart();
     },
 
     componentWillUnmount() {
@@ -27,89 +20,30 @@ const BootsAreaChart = React.createClass({
     },
 
     componentDidUpdate(prevProps) {
-        if (prevProps.latest === this.props.latest) {
-            // no new charting data
-            return;
-        }
-        let data = this.createChartData();
-        let flowColumns = data.columns.map((c) => {
-            return [head(c), c[1]]
-        });
+        if (this.arePrevPropsDataOld(prevProps)) return;
 
-        if (!this.isReadyForChartUpdate()) {
-            this.bufferFlowColumns(flowColumns);
-            return;
-        };
+        let columns = this.getFlowColumns();
 
-        if (this.props.buffer) {
-            flowColumns = this.mergeBufferWithCols(flowColumns);
-            this.flushBuffer();
-        }
+        if (!this.isReadyForChartUpdate())
+            return this.bufferFlowColumns(columns);
+        
+        columns = this.mergeBufferWithCols(columns);
 
-        this.state.chart.flow({
-            columns: flowColumns,
-        })
-
-        this.setState({
-            latestChartTimestamp: this.getLatestTimestamp(),
-        })
-
-        // debugger;
-        // TODO - setTimteout instead (?)
-    },
-
-    mergeBufferWithCols(flowColumns) {
-        const { buffer } = this.props;
-        const colNames = Object.keys(buffer);
-        return colNames.map((colName) => {
-            let prevData = buffer[colName]; // e.g., [colName, d1, d2, ...]
-            let nextData = flowColumns.find((col) => col[0] === colName);
-            if (!nextData) return prevData;
-            let nextDatum = nextData[1];
-            return [...prevData, nextDatum];
-        });
-    },
-
-    bufferFlowColumns(columns) {
-        this.props.store.dispatch({
-            type: "BUFFER_CHART_DATA",
-            columns,
-        });
-    },
-
-    flushBuffer() {
-        this.props.store.dispatch({
-            type: "FLUSH_BUFFER"
-        });
-    },
-
-    isReadyForChartUpdate() {
-        const UPDATE_SPAN = 3000; // 3s
-        const latestTimestamp = this.getLatestTimestamp();
-        const { latestChartTimestamp } = this.state;
-        const timeSinceLastUpdate = latestTimestamp - latestChartTimestamp;
-        return (timeSinceLastUpdate >= UPDATE_SPAN);
+        this.flushBuffer().updateChart({ columns });
     },
 
     createChart() {
         let bindto = this.refs.chartContainer;
         let data = this.createChartData();
-        return c3.generate({
+        let chart = c3.generate({
             bindto,
             data,
-            axis: {
-                x: {
-                    type: "timeseries",
-                    tick: {
-                        count: 60,
-                        format: '%H:%M:%S',
-                    },
-                },
-            },
-            point: {
-                show: false
-            },
+            axis: this.getAxisConfig(),
+            point: { show: false },
         });
+        this.setState({ chart });
+        this.recordChartUpdate();
+        return this;
     },
 
     createChartData() {
@@ -122,8 +56,75 @@ const BootsAreaChart = React.createClass({
         };
     },
 
-    getLatestTimestamp() {
-        return this.props.latest.timestamp;
+    getAxisConfig() {
+        return {
+            x: {
+                type: "timeseries",
+                tick: {
+                    count: 6,
+                    format: '%H:%M:%S',
+                },
+            },
+            loadavg: { min: 0 },
+        };
+    },
+
+    getFlowColumns() {
+        let data = this.createChartData();
+        return data.columns.map((c) => {
+            return [ head(c), head(tail(c)) ];
+        });
+    },
+
+    arePrevPropsDataOld(prevProps) {
+        return prevProps.latestDatumTimestamp === this.props.latestDatumTimestamp
+    },
+
+    mergeBufferWithCols(flowColumns) {
+        const { buffer } = this.props;
+        if (!buffer) return flowColumns;
+
+        const colNames = Object.keys(buffer);
+        return colNames.map((colName) => {
+            let prevData = buffer[colName]; // e.g., [colName, d1, d2, ...]
+            let nextData = flowColumns.find((col) => col[0] === colName);
+            if (!nextData) return prevData;
+            let nextDatum = nextData[1];
+            return [...prevData, nextDatum];
+        });
+    },
+
+    bufferFlowColumns(columns) {
+        const type = "BUFFER_CHART_DATA";
+        this.props.store.dispatch({ type, columns });
+        return this;
+    },
+
+    flushBuffer() {
+        const type = "FLUSH_BUFFER";
+        this.props.store.dispatch({ type });
+        return this;
+    },
+
+    recordChartUpdate() {
+        const type = "RECORD_CHART_UPDATE";
+        this.props.store.dispatch({ type });
+        return this;
+    },
+
+    updateChart({ columns }) {
+        this.state.chart.flow({ columns });
+        this.recordChartUpdate();
+        return this;
+    },
+
+    isReadyForChartUpdate() {
+        const { latestDatumTimestamp } = this.props;
+        const { latestChartTimestamp } = this.props;
+        if (latestChartTimestamp === null) return true;
+        const timeSinceLastUpdate = latestDatumTimestamp - latestChartTimestamp;
+        const { chartUpdateInterval } = this.props;
+        return (timeSinceLastUpdate >= chartUpdateInterval);
     },
 
     getLoadavgData(props) {
@@ -162,16 +163,10 @@ const Chart = () => ({
                         
                     </span>
                 </h2>
-                <BootsAreaChart
-                    store={this.props.store}
-                    buffer={this.props.buffer}
-                    data={this.props.loadData}
-                    latest={this.props.latestDatum}
-                    title={this.getTitle()} />
+                <RealTimeLineChart { ...this.props } title={this.getTitle()} />
             </div>
         );
     },
-
 });
 
 

@@ -1,14 +1,20 @@
 const { getTwoMinuteLoadavg } = require("./app-actions-load-data");
 
-module.exports = getAlertsFromLoadData;
+module.exports = { getAlertsFromLoadData };
 
 function getAlertsFromLoadData(state, action, newLoadData) {
-  let { alerts } = state;
+  const { alerts } = state;
 
   const twoMinuteAvg = getTwoMinuteLoadavg(state, action, newLoadData);
-
   if (twoMinuteAvg === "NA") return alerts;
 
+  const newAlert = getNewAlert(state, action, { twoMinuteAvg});
+  if (!newAlert) return alerts;
+
+  return trimAlerts(state, action, addAlert(state, action, newAlert));
+}
+
+function getNewAlert(state, action, { twoMinuteAvg }) {
   const wasInWarningMode = wasLastAlertWarning(state, action);
   const isInWarningMode = isLoadavgAvgHigh(state, action, twoMinuteAvg);
 
@@ -22,12 +28,7 @@ function getAlertsFromLoadData(state, action, newLoadData) {
     newAlert = createResolvedAlert(state, action, { twoMinuteAvg })
   }
 
-  if (newAlert) {
-    alerts = addAlert(state, action, newAlert);
-    alerts = trimAlerts(state, action, alerts);
-  }
-
-  return alerts;
+  return newAlert;
 }
 
 function createResolvedAlert(state, action, { twoMinuteAvg }) {

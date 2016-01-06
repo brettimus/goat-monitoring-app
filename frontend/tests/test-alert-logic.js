@@ -2,7 +2,7 @@ require("colors"); // note: monkey-patches String.prototype
 const expect = require("expect");
 const deepFreeze = require("deep-freeze");
 
-const getAlertsFromLoadData = require("../src/js/reducers/app-actions-alerts");
+const { getAlertsFromLoadData } = require("../src/js/reducers/app-actions-alerts");
 
 function testAlertLogic() {
   crossingIntoHighThresholdAddsAlert();

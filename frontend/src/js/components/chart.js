@@ -160,7 +160,7 @@ const Chart = () => ({
                 <h2 className="chart-heading">
                     {this.getTitle()}
                     <span className="chart-heading-sub">
-                        
+                        Give it about ten seconds to kick in, or change your settings above!
                     </span>
                 </h2>
                 <RealTimeLineChart { ...this.props } />

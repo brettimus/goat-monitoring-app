@@ -150,6 +150,13 @@ body {
   font-weight: $light;
 }
 
+.theme-button {
+  cursor: pointer;
+}
+
+.emoji {
+  font-weight: $normal;
+}
 
 /*
  * PURE Breakpoints

@@ -17,7 +17,7 @@ Big assumption here: **You should build and run this app on a unixy system**.
 
 > _Since load average is a unixy concept, that seems reasonable, right?_
 > 
-> **Correct.**
+> **Correct!** :confetti_ball:
 
 ### 0. Hey! You need `node`, `npm`, and `make`
 
@@ -43,9 +43,10 @@ cd frontend && npm test
 If all the tests pass, you should see a colorful and friendly message in the console. With that, you're good to goat! :goat:
 
 ### 4. Build the `frontend`
+_**Patience!** this might take a few seconds._
+
 From the project root, run:
 ```bash
-# patience! this might take a few seconds
 cd frontend && make
 ```
 
@@ -54,6 +55,9 @@ From the project root, run:
 ```bash
 node .
 ```
+
+### 6. Eat Pizza
+You deserve it. :pizza:
 
 ## How It Works
 ### A Quick Exposition
@@ -68,17 +72,15 @@ The server uses node's `os` module in conjunction with `socket.io` to broadcast 
 
 Speaking of those interested parties, how about that `frontend`, eh? 
 
-The frontend is a standard React + Redux app built with webpack. There is only one action that modifies the application's state, and it is named `"ADD_LOAD_DATUM"`.
+The frontend is a standard React + Redux app built with webpack. The action that you'll probably want to check out is named `"ADD_LOAD_DATUM"`.  I used the `c3` charting library to create the visualization.
 
-> *Psssst there's also another secret, easter-egg action, but don't tell anyone shhhhh* :speak_no_evil: :goat:.
+> *Psssst there's a secret little easter-egg action that has nothing to do with goats, but don't tell anyone shhhhh* :speak_no_evil: :goat:.
 
 The production build listens for `"loadavg update"` events over websockets. When new data are received, an `"ADD_LOAD_DATUM"` action is dispatched with the new loadavg data. This re-renders the interface with our new data and any new alerts (if we crossed the stated `loadavg` threshold.)
 
 The alert logic is handled inside `frontend/src/js/reducers/app-actions-alerts.js`.
 
 ### backend
-
-> **TODO** MOVE THIS TO `backend` FOLDER
 
 - Is a thin `node/express` server 
 - Takes a configuration object with
@@ -100,10 +102,8 @@ const loadavgUpdateData = {
 
 ### frontend
 
-> **TODO** MOVE THIS TO `frontend` FOLDER
-
 - A standard `React` and `Redux` application built with `webpack`
-- Uses the `expect` library for testing
+- Uses the `expect` library for testing, as well as some daunting mocks
 - In production, listens for `"loadavg update"` events over websockets
 - In development, mocks a websocket connection and uses `webpack-dev-server` with hot reloading
 
@@ -112,11 +112,15 @@ The entire state of the application is held inside the Redux store. The state ob
 
 ```javascript
 const state = {
-  loadData,           // Array of `loadDatum` objects
   alerts,             // Array of `alert` objects
   maxAlertHistory,    // The maximum number of alerts to remember
+  chartDataBuffer,    // A buffer of data we have received but not graphed yet
+  chartUpdateInterval, // How long we should wait before adding data to chart
+  latestDatumTimestamp, // Cached timestamp of the latest loadDatum we've seen
+  latestChartTimestamp, // The time at which we last 
+  loadData,           // Array of `loadDatum` objects
   loadAlertThreshold, // The minimum avg number that does not trigger an alert
-  loadInterval,       // Interval between `loadData` objects (ms)
+  loadInterval,       // Interval between `loadData` objects (ms) - weakpoint of app
   loadSpan,           // Amt of time over which to viz loadDatum objects (ms)
   themeName,          // It's a surprise!
 };
@@ -125,14 +129,19 @@ const state = {
 A `loadDatum` object has the following form:
 ```javascript
 const loadDatum = {
-
+  loadavg,   // Exactly what you thing it is
+  timestamp, // The timestamp (provided by the server) of loadavg observation
 };
 ```
 
 An `alert` object has the following form:
 ```javascript
 const alert = {
-    
+    type,                // Either "warning" or "success"
+    message,     
+    loadAlertThreshold, // Boundary that we crossed to trigger the alert
+    twoMinuteAvg,       // Two-minute loadavg that triggered the alert
+    timestamp,          // Time at which alert was triggered
 };
 ```
 
@@ -150,20 +159,28 @@ cd frontend && npm i && npm start
 #### Misc
 The frontend build uses Babel's Stage2 preset, which gives us some of javascript's awesome forthcoming syntactic features. (:heart: object splats `...`.)
 
+## Perceived Gotcha
+**Calculating a two-minute loadavg.** 
+
+Seeing as I keep one-minute loadavg measurements in one-second intervals, I calculated the two-minute loadavg by adding a one-minute loadavg measurement to another taken 60 seconds prior and then dividing by two. Mathematically, this made the most sense to me. I have no idea how it pans out in practice. (We can go over the assumptions at play here in person if you want.) 
+
 ## Critique
 The current version of the application could benefit from one or more of these features.
 
+### Jank
+The visualization is janky, but there are probably some other reasons for jank too. Want to profile the app with me???? It'd be fun! Let's do it!! :bar_chart:
+
 ### Serverside Caching
-The server could (should) cache its most recent data so that the client would no longer have to wait to look at a nontrivial amount of data.
+The server could (should) cache its most recent data so that the client would not have to wait around before seeing a nontrivial amount of data.
 
 ### End-User Friendliness
 It wasn't exactly clear _who_ the end-user was for this application. With more clarity on our audience, we might consider providing more context to the data that we present.
 
 #### Flexible Settings
 The user should be able to adjust certain parts of the app to their liking. E.g., 
-- the alert threshold
+- ~the alert threshold~ :tada:
 - the maximum number alerts to display
-- the timespan between data samples
+- ~the timespan between data samples~ (sort of :tada: ?)
 - the total window of time in the visualization
 
 The app could provide sensible defaults and a simple way to toy with those defaults.
@@ -174,12 +191,14 @@ E.g., it's important to know how many cores the machine has alongside its loadav
 #### Actionable Alert Messages
 Alerts should be actionable. A better version of this application would suggest courses of action in the face of high load. E.g., we could report on what process(es) were eating up system resources.
 
-### Frontend optimizations
-There are several inefficiencies in the frontend Redux code. At the current scale of the app, these inefficiencies are just noise. However, if more charts and data got added, the frontend code may beg a refactoring that focused on performance.
+### General frontend optimizations
+There are several inefficiencies in the Redux code. At the current scale of the app, these inefficiencies are _probably_ just noise. However, if more charts and data got added, the frontend code would beg a good performance tune-up
 
-### The Chart... Oh, The Chart
-- Should we really start with a bunch of zeroes?
-- Needs a more “realtime” feel (see: Bostock article)
+### Error handling + Pernicious Assumptions
+Error handling. Let's do it. E.g., what happens if the websocket connection goes kaput? What happens if... other stuff. You get the point.
+
+Also, I am certain that sneaky depedencies abound. Ya know, little areas where code assumes that data are structured a certain way, etc. Can you find them?! I am tired.
+
 
 ## Reading Materials
 Alright. I realize that I may have used a lot of tools with which you might not be familiar. 

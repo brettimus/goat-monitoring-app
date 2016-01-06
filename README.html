@@ -1,0 +1,1195 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><style>body {
+  width: 45em;
+  border: 1px solid #ddd;
+  outline: 1300px solid #fff;
+  margin: 16px auto;
+}
+
+body .markdown-body
+{
+  padding: 30px;
+}
+
+@font-face {
+  font-family: fontawesome-mini;
+  src: url(data:font/woff;charset=utf-8;base64,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) format('woff');
+}
+
+@font-face {
+  font-family: octicons-anchor;
+  src: url(data:font/woff;charset=utf-8;base64,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) format('woff');
+}
+
+.markdown-body {
+  font-family: sans-serif;
+  -ms-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+  color: #333333;
+  overflow: hidden;
+  font-family: "Helvetica Neue", Helvetica, "Segoe UI", Arial, freesans, sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+  word-wrap: break-word;
+}
+
+.markdown-body a {
+  background: transparent;
+}
+
+.markdown-body a:active,
+.markdown-body a:hover {
+  outline: 0;
+}
+
+.markdown-body b,
+.markdown-body strong {
+  font-weight: bold;
+}
+
+.markdown-body mark {
+  background: #ff0;
+  color: #000;
+  font-style: italic;
+  font-weight: bold;
+}
+
+.markdown-body sub,
+.markdown-body sup {
+  font-size: 75%;
+  line-height: 0;
+  position: relative;
+  vertical-align: baseline;
+}
+.markdown-body sup {
+  top: -0.5em;
+}
+.markdown-body sub {
+  bottom: -0.25em;
+}
+
+.markdown-body h1 {
+  font-size: 2em;
+  margin: 0.67em 0;
+}
+
+.markdown-body img {
+  border: 0;
+}
+
+.markdown-body hr {
+  -moz-box-sizing: content-box;
+  box-sizing: content-box;
+  height: 0;
+}
+
+.markdown-body pre {
+  overflow: auto;
+}
+
+.markdown-body code,
+.markdown-body kbd,
+.markdown-body pre,
+.markdown-body samp {
+  font-family: monospace, monospace;
+  font-size: 1em;
+}
+
+.markdown-body input {
+  color: inherit;
+  font: inherit;
+  margin: 0;
+}
+
+.markdown-body html input[disabled] {
+  cursor: default;
+}
+
+.markdown-body input {
+  line-height: normal;
+}
+
+.markdown-body input[type="checkbox"] {
+  box-sizing: border-box;
+  padding: 0;
+}
+
+.markdown-body table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+.markdown-body td,
+.markdown-body th {
+  padding: 0;
+}
+
+.markdown-body .codehilitetable {
+  border: 0;
+  border-spacing: 0;
+}
+
+.markdown-body .codehilitetable tr {
+  border: 0;
+}
+
+.markdown-body .codehilitetable pre,
+.markdown-body .codehilitetable div.codehilite {
+  margin: 0;
+}
+
+.markdown-body .linenos,
+.markdown-body .code,
+.markdown-body .codehilitetable td {
+  border: 0;
+  padding: 0;
+}
+
+.markdown-body td:not(.linenos) .linenodiv {
+  padding: 0 !important;
+}
+
+.markdown-body .code {
+  width: 100%;
+}
+
+.markdown-body .linenos div pre,
+.markdown-body .linenodiv pre,
+.markdown-body .linenodiv {
+  border: 0;
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
+  border-radius: 0;
+  -webkit-border-top-left-radius: 3px;
+  -webkit-border-bottom-left-radius: 3px;
+  -moz-border-radius-topleft: 3px;
+  -moz-border-radius-bottomleft: 3px;
+  border-top-left-radius: 3px;
+  border-bottom-left-radius: 3px;
+}
+
+.markdown-body .code div pre,
+.markdown-body .code div {
+  border: 0;
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
+  border-radius: 0;
+  -webkit-border-top-right-radius: 3px;
+  -webkit-border-bottom-right-radius: 3px;
+  -moz-border-radius-topright: 3px;
+  -moz-border-radius-bottomright: 3px;
+  border-top-right-radius: 3px;
+  border-bottom-right-radius: 3px;
+}
+
+.markdown-body * {
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+.markdown-body input {
+  font: 13px Helvetica, arial, freesans, clean, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol";
+  line-height: 1.4;
+}
+
+.markdown-body a {
+  color: #4183c4;
+  text-decoration: none;
+}
+
+.markdown-body a:hover,
+.markdown-body a:focus,
+.markdown-body a:active {
+  text-decoration: underline;
+}
+
+.markdown-body hr {
+  height: 0;
+  margin: 15px 0;
+  overflow: hidden;
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid #ddd;
+}
+
+.markdown-body hr:before,
+.markdown-body hr:after {
+  display: table;
+  content: " ";
+}
+
+.markdown-body hr:after {
+  clear: both;
+}
+
+.markdown-body h1,
+.markdown-body h2,
+.markdown-body h3,
+.markdown-body h4,
+.markdown-body h5,
+.markdown-body h6 {
+  margin-top: 15px;
+  margin-bottom: 15px;
+  line-height: 1.1;
+}
+
+.markdown-body h1 {
+  font-size: 30px;
+}
+
+.markdown-body h2 {
+  font-size: 21px;
+}
+
+.markdown-body h3 {
+  font-size: 16px;
+}
+
+.markdown-body h4 {
+  font-size: 14px;
+}
+
+.markdown-body h5 {
+  font-size: 12px;
+}
+
+.markdown-body h6 {
+  font-size: 11px;
+}
+
+.markdown-body blockquote {
+  margin: 0;
+}
+
+.markdown-body ul,
+.markdown-body ol {
+  padding: 0;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.markdown-body ol ol,
+.markdown-body ul ol {
+  list-style-type: lower-roman;
+}
+
+.markdown-body ul ul ol,
+.markdown-body ul ol ol,
+.markdown-body ol ul ol,
+.markdown-body ol ol ol {
+  list-style-type: lower-alpha;
+}
+
+.markdown-body dd {
+  margin-left: 0;
+}
+
+.markdown-body code,
+.markdown-body pre,
+.markdown-body samp {
+  font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace;
+  font-size: 12px;
+}
+
+.markdown-body pre {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.markdown-body kbd {
+  background-color: #e7e7e7;
+  background-image: -moz-linear-gradient(#fefefe, #e7e7e7);
+  background-image: -webkit-linear-gradient(#fefefe, #e7e7e7);
+  background-image: linear-gradient(#fefefe, #e7e7e7);
+  background-repeat: repeat-x;
+  border-radius: 2px;
+  border: 1px solid #cfcfcf;
+  color: #000;
+  padding: 3px 5px;
+  line-height: 10px;
+  font: 11px Consolas, "Liberation Mono", Menlo, Courier, monospace;
+  display: inline-block;
+}
+
+.markdown-body>*:first-child {
+  margin-top: 0 !important;
+}
+
+.markdown-body>*:last-child {
+  margin-bottom: 0 !important;
+}
+
+.markdown-body .headeranchor-link {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  display: block;
+  padding-right: 6px;
+  padding-left: 30px;
+  margin-left: -30px;
+}
+
+.markdown-body .headeranchor-link:focus {
+  outline: none;
+}
+
+.markdown-body h1,
+.markdown-body h2,
+.markdown-body h3,
+.markdown-body h4,
+.markdown-body h5,
+.markdown-body h6 {
+  position: relative;
+  margin-top: 1em;
+  margin-bottom: 16px;
+  font-weight: bold;
+  line-height: 1.4;
+}
+
+.markdown-body h1 .headeranchor,
+.markdown-body h2 .headeranchor,
+.markdown-body h3 .headeranchor,
+.markdown-body h4 .headeranchor,
+.markdown-body h5 .headeranchor,
+.markdown-body h6 .headeranchor {
+  display: none;
+  color: #000;
+  vertical-align: middle;
+}
+
+.markdown-body h1:hover .headeranchor-link,
+.markdown-body h2:hover .headeranchor-link,
+.markdown-body h3:hover .headeranchor-link,
+.markdown-body h4:hover .headeranchor-link,
+.markdown-body h5:hover .headeranchor-link,
+.markdown-body h6:hover .headeranchor-link {
+  height: 1em;
+  padding-left: 8px;
+  margin-left: -30px;
+  line-height: 1;
+  text-decoration: none;
+}
+
+.markdown-body h1:hover .headeranchor-link .headeranchor,
+.markdown-body h2:hover .headeranchor-link .headeranchor,
+.markdown-body h3:hover .headeranchor-link .headeranchor,
+.markdown-body h4:hover .headeranchor-link .headeranchor,
+.markdown-body h5:hover .headeranchor-link .headeranchor,
+.markdown-body h6:hover .headeranchor-link .headeranchor {
+  display: inline-block;
+}
+
+.markdown-body h1 {
+  padding-bottom: 0.3em;
+  font-size: 2.25em;
+  line-height: 1.2;
+  border-bottom: 1px solid #eee;
+}
+
+.markdown-body h2 {
+  padding-bottom: 0.3em;
+  font-size: 1.75em;
+  line-height: 1.225;
+  border-bottom: 1px solid #eee;
+}
+
+.markdown-body h3 {
+  font-size: 1.5em;
+  line-height: 1.43;
+}
+
+.markdown-body h4 {
+  font-size: 1.25em;
+}
+
+.markdown-body h5 {
+  font-size: 1em;
+}
+
+.markdown-body h6 {
+  font-size: 1em;
+  color: #777;
+}
+
+.markdown-body p,
+.markdown-body blockquote,
+.markdown-body ul,
+.markdown-body ol,
+.markdown-body dl,
+.markdown-body table,
+.markdown-body pre,
+.markdown-body .admonition {
+  margin-top: 0;
+  margin-bottom: 16px;
+}
+
+.markdown-body hr {
+  height: 4px;
+  padding: 0;
+  margin: 16px 0;
+  background-color: #e7e7e7;
+  border: 0 none;
+}
+
+.markdown-body ul,
+.markdown-body ol {
+  padding-left: 2em;
+}
+
+.markdown-body ul ul,
+.markdown-body ul ol,
+.markdown-body ol ol,
+.markdown-body ol ul {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.markdown-body li>p {
+  margin-top: 16px;
+}
+
+.markdown-body dl {
+  padding: 0;
+}
+
+.markdown-body dl dt {
+  padding: 0;
+  margin-top: 16px;
+  font-size: 1em;
+  font-style: italic;
+  font-weight: bold;
+}
+
+.markdown-body dl dd {
+  padding: 0 16px;
+  margin-bottom: 16px;
+}
+
+.markdown-body blockquote {
+  padding: 0 15px;
+  color: #777;
+  border-left: 4px solid #ddd;
+}
+
+.markdown-body blockquote>:first-child {
+  margin-top: 0;
+}
+
+.markdown-body blockquote>:last-child {
+  margin-bottom: 0;
+}
+
+.markdown-body table {
+  display: block;
+  width: 100%;
+  overflow: auto;
+  word-break: normal;
+  word-break: keep-all;
+}
+
+.markdown-body table th {
+  font-weight: bold;
+}
+
+.markdown-body table th,
+.markdown-body table td {
+  padding: 6px 13px;
+  border: 1px solid #ddd;
+}
+
+.markdown-body table tr {
+  background-color: #fff;
+  border-top: 1px solid #ccc;
+}
+
+.markdown-body table tr:nth-child(2n) {
+  background-color: #f8f8f8;
+}
+
+.markdown-body img {
+  max-width: 100%;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+.markdown-body code,
+.markdown-body samp {
+  padding: 0;
+  padding-top: 0.2em;
+  padding-bottom: 0.2em;
+  margin: 0;
+  font-size: 85%;
+  background-color: rgba(0,0,0,0.04);
+  border-radius: 3px;
+}
+
+.markdown-body code:before,
+.markdown-body code:after {
+  letter-spacing: -0.2em;
+  content: "\00a0";
+}
+
+.markdown-body pre>code {
+  padding: 0;
+  margin: 0;
+  font-size: 100%;
+  word-break: normal;
+  white-space: pre;
+  background: transparent;
+  border: 0;
+}
+
+.markdown-body .codehilite {
+  margin-bottom: 16px;
+}
+
+.markdown-body .codehilite pre,
+.markdown-body pre {
+  padding: 16px;
+  overflow: auto;
+  font-size: 85%;
+  line-height: 1.45;
+  background-color: #f7f7f7;
+  border-radius: 3px;
+}
+
+.markdown-body .codehilite pre {
+  margin-bottom: 0;
+  word-break: normal;
+}
+
+.markdown-body pre {
+  word-wrap: normal;
+}
+
+.markdown-body pre code {
+  display: inline;
+  max-width: initial;
+  padding: 0;
+  margin: 0;
+  overflow: initial;
+  line-height: inherit;
+  word-wrap: normal;
+  background-color: transparent;
+  border: 0;
+}
+
+.markdown-body pre code:before,
+.markdown-body pre code:after {
+  content: normal;
+}
+
+/* Admonition */
+.markdown-body .admonition {
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  position: relative;
+  border-radius: 3px;
+  border: 1px solid #e0e0e0;
+  border-left: 6px solid #333;
+  padding: 10px 10px 10px 30px;
+}
+
+.markdown-body .admonition table {
+  color: #333;
+}
+
+.markdown-body .admonition p {
+  padding: 0;
+}
+
+.markdown-body .admonition-title {
+  font-weight: bold;
+  margin: 0;
+}
+
+.markdown-body .admonition>.admonition-title {
+  color: #333;
+}
+
+.markdown-body .attention>.admonition-title {
+  color: #a6d796;
+}
+
+.markdown-body .caution>.admonition-title {
+  color: #d7a796;
+}
+
+.markdown-body .hint>.admonition-title {
+  color: #96c6d7;
+}
+
+.markdown-body .danger>.admonition-title {
+  color: #c25f77;
+}
+
+.markdown-body .question>.admonition-title {
+  color: #96a6d7;
+}
+
+.markdown-body .note>.admonition-title {
+  color: #d7c896;
+}
+
+.markdown-body .admonition:before,
+.markdown-body .attention:before,
+.markdown-body .caution:before,
+.markdown-body .hint:before,
+.markdown-body .danger:before,
+.markdown-body .question:before,
+.markdown-body .note:before {
+  font: normal normal 16px fontawesome-mini;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  line-height: 1.5;
+  color: #333;
+  position: absolute;
+  left: 0;
+  top: 0;
+  padding-top: 10px;
+  padding-left: 10px;
+}
+
+.markdown-body .admonition:before {
+  content: "\f056\00a0";
+  color: 333;
+}
+
+.markdown-body .attention:before {
+  content: "\f058\00a0";
+  color: #a6d796;
+}
+
+.markdown-body .caution:before {
+  content: "\f06a\00a0";
+  color: #d7a796;
+}
+
+.markdown-body .hint:before {
+  content: "\f05a\00a0";
+  color: #96c6d7;
+}
+
+.markdown-body .danger:before {
+  content: "\f057\00a0";
+  color: #c25f77;
+}
+
+.markdown-body .question:before {
+  content: "\f059\00a0";
+  color: #96a6d7;
+}
+
+.markdown-body .note:before {
+  content: "\f040\00a0";
+  color: #d7c896;
+}
+
+.markdown-body .admonition::after {
+  content: normal;
+}
+
+.markdown-body .attention {
+  border-left: 6px solid #a6d796;
+}
+
+.markdown-body .caution {
+  border-left: 6px solid #d7a796;
+}
+
+.markdown-body .hint {
+  border-left: 6px solid #96c6d7;
+}
+
+.markdown-body .danger {
+  border-left: 6px solid #c25f77;
+}
+
+.markdown-body .question {
+  border-left: 6px solid #96a6d7;
+}
+
+.markdown-body .note {
+  border-left: 6px solid #d7c896;
+}
+
+.markdown-body .admonition>*:first-child {
+  margin-top: 0 !important;
+}
+
+.markdown-body .admonition>*:last-child {
+  margin-bottom: 0 !important;
+}
+
+/* progress bar*/
+.markdown-body .progress {
+  display: block;
+  width: 300px;
+  margin: 10px 0;
+  height: 24px;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+  background-color: #ededed;
+  position: relative;
+  box-shadow: inset -1px 1px 3px rgba(0, 0, 0, .1);
+}
+
+.markdown-body .progress-label {
+  position: absolute;
+  text-align: center;
+  font-weight: bold;
+  width: 100%; margin: 0;
+  line-height: 24px;
+  color: #333;
+  text-shadow: 1px 1px 0 #fefefe, -1px -1px 0 #fefefe, -1px 1px 0 #fefefe, 1px -1px 0 #fefefe, 0 1px 0 #fefefe, 0 -1px 0 #fefefe, 1px 0 0 #fefefe, -1px 0 0 #fefefe, 1px 1px 2px #000;
+  -webkit-font-smoothing: antialiased !important;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.markdown-body .progress-bar {
+  height: 24px;
+  float: left;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+  background-color: #96c6d7;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .5), inset 0 -1px 0 rgba(0, 0, 0, .1);
+  background-size: 30px 30px;
+  background-image: -webkit-linear-gradient(
+    135deg, rgba(255, 255, 255, .4) 27%,
+    transparent 27%,
+    transparent 52%, rgba(255, 255, 255, .4) 52%,
+    rgba(255, 255, 255, .4) 77%,
+    transparent 77%, transparent
+  );
+  background-image: -moz-linear-gradient(
+    135deg,
+    rgba(255, 255, 255, .4) 27%, transparent 27%,
+    transparent 52%, rgba(255, 255, 255, .4) 52%,
+    rgba(255, 255, 255, .4) 77%, transparent 77%,
+    transparent
+  );
+  background-image: -ms-linear-gradient(
+    135deg,
+    rgba(255, 255, 255, .4) 27%, transparent 27%,
+    transparent 52%, rgba(255, 255, 255, .4) 52%,
+    rgba(255, 255, 255, .4) 77%, transparent 77%,
+    transparent
+  );
+  background-image: -o-linear-gradient(
+    135deg,
+    rgba(255, 255, 255, .4) 27%, transparent 27%,
+    transparent 52%, rgba(255, 255, 255, .4) 52%,
+    rgba(255, 255, 255, .4) 77%, transparent 77%,
+    transparent
+  );
+  background-image: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, .4) 27%, transparent 27%,
+    transparent 52%, rgba(255, 255, 255, .4) 52%,
+    rgba(255, 255, 255, .4) 77%, transparent 77%,
+    transparent
+  );
+}
+
+.markdown-body .progress-100plus .progress-bar {
+  background-color: #a6d796;
+}
+
+.markdown-body .progress-80plus .progress-bar {
+  background-color: #c6d796;
+}
+
+.markdown-body .progress-60plus .progress-bar {
+  background-color: #d7c896;
+}
+
+.markdown-body .progress-40plus .progress-bar {
+  background-color: #d7a796;
+}
+
+.markdown-body .progress-20plus .progress-bar {
+  background-color: #d796a6;
+}
+
+.markdown-body .progress-0plus .progress-bar {
+  background-color: #c25f77;
+}
+
+.markdown-body .candystripe-animate .progress-bar{
+  -webkit-animation: animate-stripes 3s linear infinite;
+  -moz-animation: animate-stripes 3s linear infinite;
+  animation: animate-stripes 3s linear infinite;
+}
+
+@-webkit-keyframes animate-stripes {
+  0% {
+    background-position: 0 0;
+  }
+
+  100% {
+    background-position: 60px 0;
+  }
+}
+
+@-moz-keyframes animate-stripes {
+  0% {
+    background-position: 0 0;
+  }
+
+  100% {
+    background-position: 60px 0;
+  }
+}
+
+@keyframes animate-stripes {
+  0% {
+    background-position: 0 0;
+  }
+
+  100% {
+    background-position: 60px 0;
+  }
+}
+
+.markdown-body .gloss .progress-bar {
+  box-shadow:
+    inset 0 4px 12px rgba(255, 255, 255, .7),
+    inset 0 -12px 0 rgba(0, 0, 0, .05);
+}
+
+/* Multimarkdown Critic Blocks */
+.markdown-body .critic_mark {
+  background: #ff0;
+}
+
+.markdown-body .critic_delete {
+  color: #c82829;
+  text-decoration: line-through;
+}
+
+.markdown-body .critic_insert {
+  color: #718c00 ;
+  text-decoration: underline;
+}
+
+.markdown-body .critic_comment {
+  color: #8e908c;
+  font-style: italic;
+}
+
+.markdown-body .headeranchor {
+  font: normal normal 16px octicons-anchor;
+  line-height: 1;
+  display: inline-block;
+  text-decoration: none;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.headeranchor:before {
+  content: '\f05c';
+}
+
+.markdown-body .task-list-item {
+  list-style-type: none;
+}
+
+.markdown-body .task-list-item+.task-list-item {
+  margin-top: 3px;
+}
+
+.markdown-body .task-list-item input {
+  margin: 0 4px 0.25em -20px;
+  vertical-align: middle;
+}
+
+/* Media */
+@media only screen and (min-width: 480px) {
+  .markdown-body {
+    font-size:14px;
+  }
+}
+
+@media only screen and (min-width: 768px) {
+  .markdown-body {
+    font-size:16px;
+  }
+}
+
+@media print {
+  .markdown-body * {
+    background: transparent !important;
+    color: black !important;
+    filter:none !important;
+    -ms-filter: none !important;
+  }
+
+  .markdown-body {
+    font-size:12pt;
+    max-width:100%;
+    outline:none;
+    border: 0;
+  }
+
+  .markdown-body a,
+  .markdown-body a:visited {
+    text-decoration: underline;
+  }
+
+  .markdown-body .headeranchor-link {
+    display: none;
+  }
+
+  .markdown-body a[href]:after {
+    content: " (" attr(href) ")";
+  }
+
+  .markdown-body abbr[title]:after {
+    content: " (" attr(title) ")";
+  }
+
+  .markdown-body .ir a:after,
+  .markdown-body a[href^="javascript:"]:after,
+  .markdown-body a[href^="#"]:after {
+    content: "";
+  }
+
+  .markdown-body pre {
+    white-space: pre;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+  }
+
+  .markdown-body pre,
+  .markdown-body blockquote {
+    border: 1px solid #999;
+    padding-right: 1em;
+    page-break-inside: avoid;
+  }
+
+  .markdown-body .progress,
+  .markdown-body .progress-bar {
+    -moz-box-shadow: none;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+  }
+
+  .markdown-body .progress {
+    border: 1px solid #ddd;
+  }
+
+  .markdown-body .progress-bar {
+    height: 22px;
+    border-right: 1px solid #ddd;
+  }
+
+  .markdown-body tr,
+  .markdown-body img {
+    page-break-inside: avoid;
+  }
+
+  .markdown-body img {
+    max-width: 100% !important;
+  }
+
+  .markdown-body p,
+  .markdown-body h2,
+  .markdown-body h3 {
+    orphans: 3;
+    widows: 3;
+  }
+
+  .markdown-body h2,
+  .markdown-body h3 {
+    page-break-after: avoid;
+  }
+}
+</style><title>README</title></head><body><article class="markdown-body"><h1 id="load-monitoring"><img align="absmiddle" alt=":goat:" class="emoji" height="20px" src="https://assets-cdn.github.com/images/icons/emoji/unicode/1f410.png" title=":goat:" width="20px" /> load monitoring <img align="absmiddle" alt=":goat:" class="emoji" height="20px" src="https://assets-cdn.github.com/images/icons/emoji/unicode/1f410.png" title=":goat:" width="20px" /></h1>
+<p>A simple javascript-all-the-way-down application for reporting and visualizing system load data in realtime.</p>
+<blockquote>
+<p>If you aren&rsquo;t familiar with the tools used herein, feel free to peruse the loose assembly of reading &amp; viewing materials at the bottom of the readme.</p>
+</blockquote>
+<h2 id="whats-with-the"><a name="user-content-whats-with-the" href="#whats-with-the" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>What&rsquo;s with the <img align="absmiddle" alt=":goat:" class="emoji" height="20px" src="https://assets-cdn.github.com/images/icons/emoji/unicode/1f410.png" title=":goat:" width="20px" />?</h2>
+<p>You might be wondering to yourself:</p>
+<blockquote>
+<p><img align="absmiddle" alt=":goat:" class="emoji" height="20px" src="https://assets-cdn.github.com/images/icons/emoji/unicode/1f410.png" title=":goat:" width="20px" /> ?</p>
+</blockquote>
+<p>Well, <strong>this is a load monitoring application</strong>, okay? </p>
+<p><strong>It has nothing to do with goats</strong> whatsoever. Don&rsquo;t be a silly-goat. Stop asking about the goats.</p>
+<blockquote>
+<p><img align="absmiddle" alt=":goat:" class="emoji" height="20px" src="https://assets-cdn.github.com/images/icons/emoji/unicode/1f410.png" title=":goat:" width="20px" /> .</p>
+</blockquote>
+<h2 id="quick-start"><a name="user-content-quick-start" href="#quick-start" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>Quick Start</h2>
+<p>Big assumption here: <strong>You should build and run this app on a unixy system</strong>. </p>
+<blockquote>
+<p><em>Since load average is a unixy concept, that seems reasonable, right?</em></p>
+<p><strong>Correct!</strong> <img align="absmiddle" alt=":confetti_ball:" class="emoji" height="20px" src="https://assets-cdn.github.com/images/icons/emoji/unicode/1f38a.png" title=":confetti_ball:" width="20px" /></p>
+</blockquote>
+<h3 id="0-hey-you-need-node-npm-and-make"><a name="user-content-0-hey-you-need-node-npm-and-make" href="#0-hey-you-need-node-npm-and-make" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>0. Hey! You need <code>node</code>, <code>npm</code>, and <code>make</code></h3>
+<p>(Optionally, you may want to grab yourself a <img align="absmiddle" alt=":goat:" class="emoji" height="20px" src="https://assets-cdn.github.com/images/icons/emoji/unicode/1f410.png" title=":goat:" width="20px" />, but like I said, that&rsquo;s not what this application is about. Okay?)</p>
+<h3 id="1-install-the-backend-dependencies"><a name="user-content-1-install-the-backend-dependencies" href="#1-install-the-backend-dependencies" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>1. Install the <code>backend</code> dependencies</h3>
+<p>From the project root, run: <br />
+<pre><code class="bash">cd backend &amp;&amp; npm i
+</code></pre></p>
+<h3 id="2-install-the-frontend-dependencies"><a name="user-content-2-install-the-frontend-dependencies" href="#2-install-the-frontend-dependencies" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>2. Install the <code>frontend</code> dependencies</h3>
+<p>From the project root, run:<br />
+<pre><code class="bash">cd frontend &amp;&amp; npm i
+</code></pre></p>
+<h3 id="3-test-the-frontend-alert-logic"><a name="user-content-3-test-the-frontend-alert-logic" href="#3-test-the-frontend-alert-logic" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>3. Test the <code>frontend</code> alert logic</h3>
+<p>From the project root, run:<br />
+<pre><code class="bash">cd frontend &amp;&amp; npm test
+</code></pre><br />
+If all the tests pass, you should see a colorful and friendly message in the console. With that, you&rsquo;re good to goat! <img align="absmiddle" alt=":goat:" class="emoji" height="20px" src="https://assets-cdn.github.com/images/icons/emoji/unicode/1f410.png" title=":goat:" width="20px" /></p>
+<h3 id="4-build-the-frontend"><a name="user-content-4-build-the-frontend" href="#4-build-the-frontend" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>4. Build the <code>frontend</code></h3>
+<p><em><strong>Patience!</strong> this might take a few seconds.</em></p>
+<p>From the project root, run:<br />
+<pre><code class="bash">cd frontend &amp;&amp; make
+</code></pre></p>
+<h3 id="5-run-the-app"><a name="user-content-5-run-the-app" href="#5-run-the-app" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>5. Run the app</h3>
+<p>From the project root, run:<br />
+<pre><code class="bash">node .
+</code></pre></p>
+<h3 id="6-eat-pizza"><a name="user-content-6-eat-pizza" href="#6-eat-pizza" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>6. Eat Pizza</h3>
+<p>You deserve it. <img align="absmiddle" alt=":pizza:" class="emoji" height="20px" src="https://assets-cdn.github.com/images/icons/emoji/unicode/1f355.png" title=":pizza:" width="20px" /></p>
+<h2 id="how-it-works"><a name="user-content-how-it-works" href="#how-it-works" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>How It Works</h2>
+<h3 id="a-quick-exposition"><a name="user-content-a-quick-exposition" href="#a-quick-exposition" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>A Quick Exposition</h3>
+<p>The <code>index.js</code> file in the project root connects the <code>frontend</code> and the <code>backend</code>. It does this by giving the backend server the following information:</p>
+<ul>
+<li><code>pathToIndex</code>: Where the root html document is located</li>
+<li><code>pathToAssets</code>: Where the assets for the frontend application are located</li>
+</ul>
+<p>Our backend happens to serve the <code>index.html</code> file in the project root. This file expects that it can grab a <code>tada.js</code> file (served from the folder <code>frontend/dist</code>, our static asset directory). <code>tada.js</code> should in turn load the <code>frontend</code> build that consumes our <code>backend</code>.</p>
+<p>The server uses node&rsquo;s <code>os</code> module in conjunction with <code>socket.io</code> to broadcast system load data to interested parties over websockets via <code>"loadavg update"</code> events. </p>
+<p>Speaking of those interested parties, how about that <code>frontend</code>, eh? </p>
+<p>The frontend is a standard React + Redux app built with webpack. The action that you&rsquo;ll probably want to check out is named <code>"ADD_LOAD_DATUM"</code>.  I used the <code>c3</code> charting library to create the visualization.</p>
+<blockquote>
+<p><em>Psssst there&rsquo;s a secret little easter-egg action that has nothing to do with goats, but don&rsquo;t tell anyone shhhhh</em> <img align="absmiddle" alt=":speak_no_evil:" class="emoji" height="20px" src="https://assets-cdn.github.com/images/icons/emoji/unicode/1f64a.png" title=":speak_no_evil:" width="20px" /> <img align="absmiddle" alt=":goat:" class="emoji" height="20px" src="https://assets-cdn.github.com/images/icons/emoji/unicode/1f410.png" title=":goat:" width="20px" />.</p>
+</blockquote>
+<p>The production build listens for <code>"loadavg update"</code> events over websockets. When new data are received, an <code>"ADD_LOAD_DATUM"</code> action is dispatched with the new loadavg data. This re-renders the interface with our new data and any new alerts (if we crossed the stated <code>loadavg</code> threshold.)</p>
+<p>The alert logic is handled inside <code>frontend/src/js/reducers/app-actions-alerts.js</code>.</p>
+<h3 id="backend"><a name="user-content-backend" href="#backend" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>backend</h3>
+<ul>
+<li>Is a thin <code>node/express</code> server </li>
+<li>Takes a configuration object with<ul>
+<li>the path to the root html document</li>
+<li>the path to the static assets folder</li>
+</ul>
+</li>
+<li>Makes use of <code>os</code> and <code>socket.io</code> to broadcast system load information over websockets</li>
+<li>Prints a cute and colorful <code>"server listening"</code> message</li>
+</ul>
+<h4 id="the-websocket-api"><a name="user-content-the-websocket-api" href="#the-websocket-api" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>The websocket api</h4>
+<p>The <code>"loadavg update"</code> event emits some data over websockets. That data looks like this:<br />
+<pre><code class="javascript">const loadavgUpdateData = {
+    loadavg1, // One minute load average
+    loadavg5, // Five minute load average
+    loadavg15, // Fifteen minute load average
+    timestamp, // Timestamp (ms since Jan. 1, 1970 +0000 UTC)
+};
+</code></pre></p>
+<h3 id="frontend"><a name="user-content-frontend" href="#frontend" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>frontend</h3>
+<ul>
+<li>A standard <code>React</code> and <code>Redux</code> application built with <code>webpack</code></li>
+<li>Uses the <code>expect</code> library for testing, as well as some daunting mocks</li>
+<li>In production, listens for <code>"loadavg update"</code> events over websockets</li>
+<li>In development, mocks a websocket connection and uses <code>webpack-dev-server</code> with hot reloading</li>
+</ul>
+<h4 id="application-state"><a name="user-content-application-state" href="#application-state" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>Application state</h4>
+<p>The entire state of the application is held inside the Redux store. The state object includes the following fields:</p>
+<pre><code class="javascript">const state = {
+  alerts,             // Array of `alert` objects
+  maxAlertHistory,    // The maximum number of alerts to remember
+  chartDataBuffer,    // A buffer of data we have received but not graphed yet
+  chartUpdateInterval, // How long we should wait before adding data to chart
+  latestDatumTimestamp, // Cached timestamp of the latest loadDatum we've seen
+  latestChartTimestamp, // The time at which we last 
+  loadData,           // Array of `loadDatum` objects
+  loadAlertThreshold, // The minimum avg number that does not trigger an alert
+  loadInterval,       // Interval between `loadData` objects (ms) - weakpoint of app
+  loadSpan,           // Amt of time over which to viz loadDatum objects (ms)
+  themeName,          // It's a surprise!
+};
+</code></pre>
+
+<p>A <code>loadDatum</code> object has the following form:<br />
+<pre><code class="javascript">const loadDatum = {
+  loadavg,   // Exactly what you thing it is
+  timestamp, // The timestamp (provided by the server) of loadavg observation
+};
+</code></pre></p>
+<p>An <code>alert</code> object has the following form:<br />
+<pre><code class="javascript">const alert = {
+    type,                // Either &quot;warning&quot; or &quot;success&quot;
+    message,     
+    loadAlertThreshold, // Boundary that we crossed to trigger the alert
+    twoMinuteAvg,       // Two-minute loadavg that triggered the alert
+    timestamp,          // Time at which alert was triggered
+};
+</code></pre></p>
+<h4 id="developing"><a name="user-content-developing" href="#developing" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>Developing</h4>
+<p>The frontend also <strong>makes use of feature flags</strong> to help mock out the backend in development. (The production build removes these chunks of code for us.)</p>
+<p>Thus, we can develop the frontend separately from the backend. (_I investigated a few different approaches here, and using feature flags seemed to be the simplest for the scope of this project.__) Furthermore, we can take advantage of <img align="absmiddle" alt=":fire:" class="emoji" height="20px" src="https://assets-cdn.github.com/images/icons/emoji/unicode/1f525.png" title=":fire:" width="20px" /> hot module replacement while we work on the interface. (Thanks be to <code>webpack-dev-server</code>.) </p>
+<p>To check out the <img align="absmiddle" alt=":fire:" class="emoji" height="20px" src="https://assets-cdn.github.com/images/icons/emoji/unicode/1f525.png" title=":fire:" width="20px" /> hot reloading, run the following from the project root:</p>
+<pre><code class="bash">cd frontend &amp;&amp; npm i &amp;&amp; npm start
+</code></pre>
+
+<h4 id="misc"><a name="user-content-misc" href="#misc" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>Misc</h4>
+<p>The frontend build uses Babel&rsquo;s Stage2 preset, which gives us some of javascript&rsquo;s awesome forthcoming syntactic features. (<img align="absmiddle" alt=":heart:" class="emoji" height="20px" src="https://assets-cdn.github.com/images/icons/emoji/unicode/2764.png" title=":heart:" width="20px" /> object splats <code>...</code>.)</p>
+<h2 id="critique"><a name="user-content-critique" href="#critique" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>Critique</h2>
+<p>The current version of the application could benefit from one or more of these features.</p>
+<h3 id="jank"><a name="user-content-jank" href="#jank" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>Jank</h3>
+<p>The visualization is janky, but there are probably some other reasons for jank too. Want to profile the app with me???? It&rsquo;d be fun! Let&rsquo;s do it!! <img align="absmiddle" alt=":bar_chart:" class="emoji" height="20px" src="https://assets-cdn.github.com/images/icons/emoji/unicode/1f4ca.png" title=":bar_chart:" width="20px" /></p>
+<h3 id="serverside-caching"><a name="user-content-serverside-caching" href="#serverside-caching" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>Serverside Caching</h3>
+<p>The server could (should) cache its most recent data so that the client would no longer have to wait to look at a nontrivial amount of data.</p>
+<h3 id="end-user-friendliness"><a name="user-content-end-user-friendliness" href="#end-user-friendliness" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>End-User Friendliness</h3>
+<p>It wasn&rsquo;t exactly clear <em>who</em> the end-user was for this application. With more clarity on our audience, we might consider providing more context to the data that we present.</p>
+<h4 id="flexible-settings"><a name="user-content-flexible-settings" href="#flexible-settings" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>Flexible Settings</h4>
+<p>The user should be able to adjust certain parts of the app to their liking. E.g., <br />
+- ~the alert threshold~ <img align="absmiddle" alt=":tada:" class="emoji" height="20px" src="https://assets-cdn.github.com/images/icons/emoji/unicode/1f389.png" title=":tada:" width="20px" /><br />
+- the maximum number alerts to display<br />
+- ~the timespan between data samples~ (sort of <img align="absmiddle" alt=":tada:" class="emoji" height="20px" src="https://assets-cdn.github.com/images/icons/emoji/unicode/1f389.png" title=":tada:" width="20px" /> ?)<br />
+- the total window of time in the visualization</p>
+<p>The app could provide sensible defaults and a simple way to toy with those defaults.</p>
+<h4 id="contextual-loadavg-measurements"><a name="user-content-contextual-loadavg-measurements" href="#contextual-loadavg-measurements" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>Contextual loadavg measurements</h4>
+<p>E.g., it&rsquo;s important to know how many cores the machine has alongside its loadavg.</p>
+<h4 id="actionable-alert-messages"><a name="user-content-actionable-alert-messages" href="#actionable-alert-messages" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>Actionable Alert Messages</h4>
+<p>Alerts should be actionable. A better version of this application would suggest courses of action in the face of high load. E.g., we could report on what process(es) were eating up system resources.</p>
+<h3 id="general-frontend-optimizations"><a name="user-content-general-frontend-optimizations" href="#general-frontend-optimizations" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>General frontend optimizations</h3>
+<p>There are several inefficiencies in the Redux code. At the current scale of the app, these inefficiencies are <em>probably</em> just noise. However, if more charts and data got added, the frontend code would beg a good performance tune-up</p>
+<h3 id="error-handling-pernicious-assumptions"><a name="user-content-error-handling-pernicious-assumptions" href="#error-handling-pernicious-assumptions" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>Error handling + Pernicious Assumptions</h3>
+<p>Error handling. Let&rsquo;s do it. E.g., what happens if the websocket connection goes kaput? What happens if&hellip; other stuff. You get the point.</p>
+<p>Also, I am certain that sneaky depedencies abound. Ya know, little areas where code assumes that data are structured a certain way, etc. Can you find them?! I am tired.</p>
+<h2 id="reading-materials"><a name="user-content-reading-materials" href="#reading-materials" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>Reading Materials</h2>
+<p>Alright. I realize that I may have used a lot of tools with which you might not be familiar. </p>
+<p>Personally, I would be <img align="absmiddle" alt=":rage:" class="emoji" height="20px" src="https://assets-cdn.github.com/images/icons/emoji/unicode/1f621.png" title=":rage:" width="20px" /> if I had to review this code, and I hadn&rsquo;t ever toyed with React, Redux, webpack, etc. </p>
+<p>In that instance, the best I can do is give you some light reading. This might not help mitigate the <img align="absmiddle" alt=":rage:" class="emoji" height="20px" src="https://assets-cdn.github.com/images/icons/emoji/unicode/1f621.png" title=":rage:" width="20px" />, but I really, really, really have come to love these tools. (I also felt like they fit this project particularly well.) After some fiddling, I think you might love these tools as well.</p>
+<ul>
+<li><a href="https://facebook.github.io/react/docs/getting-started.html">Getting started with React</a></li>
+<li><a href="https://code-cartoons.com/a-cartoon-intro-to-redux-3afb775501a6#.j21u1hhw7">A Cartoon introduction to Redux</a></li>
+<li><a href="https://github.com/petehunt/webpack-howto">Pete Hunt&rsquo;s webpack howto</a> (<em>wayyy better intro than the webpack docs</em>)</li>
+<li><a href="https://egghead.io/lessons/javascript-redux-the-single-immutable-state-tree">Dan Abramov&rsquo;s Redux video tutorial</a></li>
+</ul>
+<h2 id="the-original-prompt"><a name="user-content-the-original-prompt" href="#the-original-prompt" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>The Original Prompt</h2>
+<p>For reference.</p>
+<h3 id="load-monitoring-web-application"><a name="user-content-load-monitoring-web-application" href="#load-monitoring-web-application" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>Load monitoring web application</h3>
+<p>Create a simple web application that monitors load average on your machine:</p>
+<ul>
+<li>Collect the machine load (using “uptime” for example)</li>
+<li>Display in the application the key statistics as well as a history of load over the past 10 minutes in 10s intervals. We’d suggest a graphical representation using D3.js, but feel free to use another tool or representation if you prefer. Make it easy for the end-user to picture the situation!</li>
+<li>Make sure a user can keep the web page open and monitor the load on their machine.</li>
+<li>Whenever the load for the past 2 minutes exceeds 1 on average, add a message saying that “High load generated an alert - load = {value}, triggered at {time}”</li>
+<li>Whenever the load average drops again below 1 on average for the past 2 minutes, Add another message explaining when the alert recovered. </li>
+<li>Make sure all messages showing when alerting thresholds are crossed remain visible on the page for historical reasons.</li>
+<li>Write a test for the alerting logic</li>
+<li>Explain how you’d improve on this application design</li>
+</ul></article></body></html>

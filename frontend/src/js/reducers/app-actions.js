@@ -6,9 +6,12 @@ const { head } = require("../utils");
 module.exports = {
   addLoadDatum,
   bufferChartData,
+  hideControlPanel,
   flushBuffer,
   recordChartUpdate,
+  showControlPanel,
   toggleTheme,
+  updateControl,
 };
 
 function addLoadDatum(state, action) {
@@ -41,13 +44,28 @@ function flushBuffer(state, action) {
   return { ...state, chartDataBuffer };
 }
 
+function hideControlPanel(state, action) {
+  const showControlPanel = false;
+  return { ...state,  showControlPanel };
+}
+
 function recordChartUpdate(state, action) {
   const latestChartTimestamp = state.latestDatumTimestamp;
   return { ...state, latestChartTimestamp };
+}
+
+function showControlPanel(state, action) {
+  const showControlPanel = true;
+  return { ...state,  showControlPanel };
 }
 
 function toggleTheme(state, action) {
   const prevTheme = state.themeName;
   const themeName = (prevTheme === "goat") ? "load" : "goat";
   return { ...state, themeName };
+}
+
+function updateControl(state, action) {
+  const { control } = action;
+  return { ...state,  ...control };
 }

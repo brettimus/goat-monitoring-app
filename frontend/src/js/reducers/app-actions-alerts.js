@@ -32,20 +32,24 @@ function getNewAlert(state, action, { twoMinuteAvg }) {
 }
 
 function createResolvedAlert(state, action, { twoMinuteAvg }) {
+  let { loadAlertThreshold } = state;
   let { timestamp } = action.loadDatum;
   return {
     type: "success",
     message: "High {theme} recovered",
+    loadAlertThreshold,
     twoMinuteAvg,
     timestamp,
   };
 }
 
 function createWarningAlert(state, action, { twoMinuteAvg }) {
+  let { loadAlertThreshold } = state;
   let { timestamp } = action.loadDatum;
   return {
     type: "warning",
     message: "High {theme} generated an alert",
+    loadAlertThreshold,
     twoMinuteAvg,
     timestamp,
   };

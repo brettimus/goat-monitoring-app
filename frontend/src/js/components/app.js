@@ -3,16 +3,19 @@ const io = require("socket.io-client");
 
 const Alerts = require("./alerts");
 const Chart = require("./chart");
+const ControlPanel = require("./control-panel");
 const Header = require("./header");
 const Nav = require("./nav");
+const Settings = require("./settings");
+
+const { randomLoadDatum } = require("../utils");
 
 const App = () => ({
 
     addLoadDatum(loadDatum) {
-        this.props.store.dispatch({
-            type: "ADD_LOAD_DATUM",
-            loadDatum,
-        });
+        const type = "ADD_LOAD_DATUM";
+        this.props.store.dispatch({ type, loadDatum });
+        return this;
     },
 
     componentDidMount() {
@@ -27,18 +30,9 @@ const App = () => ({
         this.addLoadDatum(data);
     },
 
-    randomLoadDatum() {
-        return {
-            timestamp: new Date(),
-            loadavg1: Math.random() * 2.5,
-            loadavg5: Math.random() * 2.5,
-            loadavg15: Math.random() * 2.5,
-        };
-    },
-
     startListeningForData() {
         if (__DEV__) {
-            this._socket = setInterval(() => this.handleData(this.randomLoadDatum()), 1000)
+            this._socket = setInterval(() => this.handleData(randomLoadDatum()), 1000)
             return;          
         }
 
@@ -61,7 +55,10 @@ const App = () => ({
         const { loadData } = state;
         const { latestChartTimestamp, latestDatumTimestamp } = state;
         const { chartUpdateInterval } = state;
+        const { loadInterval } = state;
         const { alerts } = state;
+        const { loadAlertThreshold } = state;
+        const { showControlPanel } = state;
         const { themeName } = state;
         const buffer = state.chartDataBuffer;
 
@@ -70,14 +67,18 @@ const App = () => ({
         return (
             <div className="app-container">
                 <Nav store={this.props.store} theme={themeName}></Nav>
-                <Header store={this.props.store} theme={themeName} />
+                <Header theme={themeName}>
+                    <Settings showControlPanel={showControlPanel} store={this.props.store} />
+                    <ControlPanel showControlPanel={showControlPanel} store={this.props.store} />
+                </Header>
                 <Chart store={this.props.store} 
                         theme={themeName}
                         buffer={buffer} 
                         data={loadData} 
                         latestChartTimestamp={latestChartTimestamp}
                         latestDatumTimestamp={latestDatumTimestamp} 
-                        chartUpdateInterval={chartUpdateInterval} />
+                        chartUpdateInterval={chartUpdateInterval} 
+                        loadInterval={loadInterval} />
 
                 <Alerts alerts={alerts} theme={themeName} />
             </div>

@@ -13,6 +13,7 @@ const AlertData = () => ({
                        {capitalize(theme)}
                     </th>
                     <th>Triggered at</th>
+                    <th>Alert threshold crossed</th>
                 </tr>
             </thead>
             <tbody>
@@ -24,6 +25,9 @@ const AlertData = () => ({
                             {moment(timestamp).format("(MMM Do, YYYY)")}
                         </span>
                     </td>
+                    <td style={{ textAlign: "right",}}>
+                        {this.props.loadAlertThreshold}
+                    </td>
                 </tr>
             </tbody>
             </table>
@@ -34,10 +38,6 @@ const AlertData = () => ({
 const Alert = () => ({
     message() {
         return this.props.message.replace("{theme}", this.props.theme);
-    },
-
-    renderAlertData() {
-
     },
 
     render() {

@@ -10,6 +10,7 @@ const Header = () => ({
                         Let's monitor some { this.props.theme }.
                     </span>
                 </h1>
+                {this.props.children}
             </header>
         );
     }

@@ -63,9 +63,72 @@ body {
   box-shadow: 0 .5em 0 $yellow;
 }
 
-.app-heading {
+.form {
+  fieldset {
+    border: 0;
+    border-left: solid .2em lighten($yellow, 15%);
 
+    &:not(:first-of-type) {
+      margin-top: .6em;
+    }
+
+    &:nth-of-type(even) {
+      border-left: solid .2em lighten($orange, 15%);
+    }
+  }
 }
+
+.form--controls {
+  input {
+    color: $black;
+  }
+}
+
+.control-input {
+  border: 0;
+  border-radius: .3em;
+  padding: .3em .4em .45em;
+}
+
+.control-input--number {
+  text-align: center;
+  width: 2.5em;
+}
+
+.control-buttons {
+  display: inline-block;
+}
+
+.control-button {
+  background: transparent;
+  display: inline-block;
+}
+
+.control-button--circle {
+  border: solid 1px $white;
+  border-radius: 50%;
+  line-height: 2.7em;
+  height: 3em;
+  margin-left: .3em;
+  padding: 0;
+  width: 3em;
+}
+
+.controls-action {
+  cursor: pointer;
+  font-style: italic;
+}
+
+.controls-action--hide {
+  color: lighten($red, 30%);
+}
+
+.controls-action--expand {
+  color: lighten($blue, 40%);
+}
+
+
+.app-heading {}
 
 .app-heading-sub {
   display: inline-block;

@@ -1,23 +1,25 @@
 const { head } = require("../utils");
 
-const chartUpdateInterval = 3000;
+const chartUpdateInterval = 10000;
 const loadAlertThreshold = 1;
 const loadInterval = 1000;
 const loadSpan = 10 * 60 * 1000;
 const maxAlertHistory = 100;
+const showControlPanel = false;
 const themeName = "load";
 
 const initialState = {
-  chartDataBuffer: {},  // keeps a buffer of data we haven't graphed yet
-  chartUpdateInterval,
-  loadData: [],         // most recent data come first
-  latestDatumTimestamp: null,
-  latestChartTimestamp: null,
   alerts: [],
   maxAlertHistory,
+  chartDataBuffer: {},  // keeps a buffer of data we haven't graphed yet
+  chartUpdateInterval,
+  latestDatumTimestamp: null,
+  latestChartTimestamp: null,
+  loadData: [],         // most recent data come first
   loadAlertThreshold,
   loadInterval,         // ms (store load data in 1s intervals) BIG WEAK POINT OF THIS APP!
   loadSpan,             // ms (keep 10 mins of load data)
+  showControlPanel,
   themeName,
 };
 

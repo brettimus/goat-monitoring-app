@@ -150,7 +150,7 @@ const Chart = () => ({
 
     getTitle() {
         let { theme } = this.props;
-        let title = capitalize(theme)
+        let title = capitalize(theme) + " average over the past 10 minutes";
         return title;
     },
 
@@ -158,12 +158,12 @@ const Chart = () => ({
         return (
             <div className="container container--charts">
                 <h2 className="chart-heading">
-                    Load average over the past 10 minutes
+                    {this.getTitle()}
                     <span className="chart-heading-sub">
                         
                     </span>
                 </h2>
-                <RealTimeLineChart { ...this.props } title={this.getTitle()} />
+                <RealTimeLineChart { ...this.props } />
             </div>
         );
     },

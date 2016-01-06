@@ -29,7 +29,7 @@ const ControlPanelForm = () => ({
                     seconds.
                 </fieldset>
                 <fieldset>
-                    Alert me when two-minute load average exceeds
+                    Alert me when two-minute {this.props.theme} average exceeds
                     &nbsp;
                     <input disabled className="control-input control-input--number" value={loadAlertThreshold} />
                     &nbsp;
@@ -70,7 +70,7 @@ const ControlPanel = () => ({
                           Hide my settings!
                         </a>
                     </p>
-                    <ControlPanelForm store={this.props.store} />
+                    <ControlPanelForm store={this.props.store} theme={this.props.theme} />
                 </div>
             </VelocityComponent>
         );

@@ -69,7 +69,7 @@ const App = () => ({
                 <Nav store={this.props.store} theme={themeName}></Nav>
                 <Header theme={themeName}>
                     <Settings showControlPanel={showControlPanel} store={this.props.store} />
-                    <ControlPanel showControlPanel={showControlPanel} store={this.props.store} />
+                    <ControlPanel showControlPanel={showControlPanel} theme={themeName} store={this.props.store} />
                 </Header>
                 <Chart store={this.props.store} 
                         theme={themeName}
